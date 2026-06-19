@@ -65,8 +65,8 @@ export default function AuthLayout({
       </div>
 
       {/* Right panel — form */}
-      <div className="flex-1 items-center justify-center px-6 py-12">
-        <div className="w-full max-w-md">
+      <div className="w-full flex items-center justify-center px-6 py-12">
+        <div className="w-full max-w-md ">
             {/* Mobile Logo */}
             <div className="flex lg:hidden items-center gap-3 mb-8">
             <div className="w-9 h-9 bg-primary rounded-xl flex items-center justify-center">

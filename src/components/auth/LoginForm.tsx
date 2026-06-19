@@ -1,15 +1,35 @@
-import { Button } from "../ui";
+'use client'
+import { Mail, Lock, Eye } from "lucide-react";
+import { Button, Input } from "../ui";
 
 export function LoginForm() {
   return (
-    <form>
+    <form className="space-y-5">
       <div>
         <h1 className="font-bold text-foreground">Добро пожаловать!</h1>
         <p className="text-muted-foreground text-sm mt-1">
           Войдите в свою учетную запись администратора.
         </p>
       </div>
-      <Button className="w-full py-2.5">Войти</Button>
+
+      {/* Add error */}
+
+      <div className="space-y-4">
+        <Input 
+            type="email"
+            placeholder="Введите email"
+            autoComplete="email"
+            icon={Mail}
+        />
+        <Input 
+            type="password"
+            placeholder="Введите пароль"
+            autoComplete="password"
+            icon={Lock}
+            rightIcon={Eye}
+        />
+      </div>
+      <Button type="submit" className="w-full py-2.5">Войти</Button>
     </form>
   );
 }
