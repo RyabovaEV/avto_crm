@@ -1,3 +1,4 @@
+import { AuthTabs } from "@/components/auth/AuthTabs";
 import { Bus } from "lucide-react";
 import { ReactNode } from "react";
 
@@ -74,23 +75,7 @@ export default function AuthLayout({
             </div>
             <span className="text-foreground font-bold text-lg">ООО &quot;Авто&quot;</span>
           </div>
-          {/* Tab switcher */}
-          <div className="flex rounded-xl bg-secondary p-1 mb-8">
-            <button className="flex-1 py-2 text-sm font-medium rounded-lg transition-all capitalize">Sign In</button>
-{/*             {(["login", "register"] as AuthMode[]).map(m => (
-              <button
-                key={m}
-                onClick={() => switchMode(m)}
-                className={`flex-1 py-2 text-sm font-medium rounded-lg transition-all capitalize ${
-                  mode === m
-                    ? "bg-white text-foreground shadow-sm"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                {m === "login" ? "Sign In" : "Create Account"}
-              </button>
-            ))} */}
-          </div>
+          <AuthTabs />
             {children}
         </div>
       </div>
