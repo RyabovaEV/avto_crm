@@ -1,3 +1,9 @@
+import { Header } from '@/components/ui';
+
 export default function NewsPage() {
-  return <div>NewsPage</div>;
+  return (
+    <>
+      <Header title="Новости" description="Объявления и обновления компании" />
+    </>
+  );
 }

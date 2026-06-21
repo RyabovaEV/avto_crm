@@ -36,7 +36,7 @@
   --sidebar-primary-foreground: theme('colors.blue.900');
   --sidebar-accent: theme('colors.blue.800');
   --sidebar-accent-foreground: theme('colors.white');
-  --sidebar-border: theme('colors.white') / 10%;
+  --sidebar-border: color-mix(in srgb, theme('colors.white') 10%, transparent);
   --sidebar-ring: theme('colors.blue.400');
 }
 
