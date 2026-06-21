@@ -11,6 +11,8 @@ const tabs = [
 export function AuthTabs() {
   const pathname = usePathname()
 
+  if (pathname === '/forgot-password') return null
+  
   return (
     <div className="flex rounded-xl bg-secondary p-1 mb-8">
       {tabs.map((tab) => (
