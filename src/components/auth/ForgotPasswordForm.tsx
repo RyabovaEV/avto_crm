@@ -1,6 +1,6 @@
-import { ChevronRight, Mail } from "lucide-react";
-import { Button, Input } from "../ui";
-import Link from "next/link";
+import { ChevronRight, Mail } from 'lucide-react';
+import { Button, Input } from '../ui';
+import Link from 'next/link';
 
 export function ForgotPasswordForm() {
   return (
@@ -12,8 +12,7 @@ export function ForgotPasswordForm() {
         <ChevronRight size={14} className="rotate-180" /> Вернуться к
         авторизации
       </Link>
-      <div className="flex items-center gap-2">
-      </div>
+      <div className="flex items-center gap-2"></div>
       <form className="space-y-5">
         <div>
           <h1 className="font-bold text-foreground">Забыли пароль?</h1>

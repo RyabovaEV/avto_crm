@@ -1,5 +1,5 @@
-import { Eye, Mail, User, Lock } from "lucide-react";
-import { Button, Input } from "../ui";
+import { Eye, Mail, User, Lock } from 'lucide-react';
+import { Button, Input } from '../ui';
 
 export function RegisterForm() {
   return (

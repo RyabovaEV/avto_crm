@@ -1,7 +1,7 @@
-import { AuthTabs } from "@/components/auth/AuthTabs";
-import { Logo } from "@/components/ui";
-import { Bus } from "lucide-react";
-import { ReactNode } from "react";
+import { AuthTabs } from '@/components/auth/AuthTabs';
+import { Logo } from '@/components/ui';
+import { Bus } from 'lucide-react';
+import { ReactNode } from 'react';
 
 export default function AuthLayout({
   children,
@@ -19,9 +19,9 @@ export default function AuthLayout({
               style={{
                 width: `${(i + 1) * 120}px`,
                 height: `${(i + 1) * 120}px`,
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
               }}
             />
           ))}
@@ -38,7 +38,7 @@ export default function AuthLayout({
               вакансиями — всё в одном месте.
             </p>
             <div className="flex flex-col gap-2 pt-2">
-              {["Новости", "Маршруты", "Автошкола", "Вакансии"].map((item) => (
+              {['Новости', 'Маршруты', 'Автошкола', 'Вакансии'].map((item) => (
                 <div
                   key={item}
                   className="flex items-center gap-2 text-blue-200 text-sm"
@@ -59,15 +59,17 @@ export default function AuthLayout({
       {/* Right panel — form */}
       <div className="w-full flex items-center justify-center px-6 py-12">
         <div className="w-full max-w-md ">
-            {/* Mobile Logo */}
-            <div className="flex lg:hidden items-center gap-3 mb-8">
+          {/* Mobile Logo */}
+          <div className="flex lg:hidden items-center gap-3 mb-8">
             <div className="w-9 h-9 bg-primary rounded-xl flex items-center justify-center">
               <Bus size={18} className="text-card" />
             </div>
-            <span className="text-foreground font-bold text-lg">ООО &quot;Авто&quot;</span>
+            <span className="text-foreground font-bold text-lg">
+              ООО &quot;Авто&quot;
+            </span>
           </div>
           <AuthTabs />
-            {children}
+          {children}
         </div>
       </div>
     </div>

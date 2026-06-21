@@ -1,20 +1,20 @@
-import { cn } from '@/lib/cn'
-import { type LucideIcon } from 'lucide-react'
+import { cn } from '@/lib/cn';
+import { type LucideIcon } from 'lucide-react';
 
 type InputProps = {
-  type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'search'
-  className?: string
-  placeholder?: string
-  value?: string
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
-  autoComplete?: string
+  type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'search';
+  className?: string;
+  placeholder?: string;
+  value?: string;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  autoComplete?: string;
   /** иконка слева статика */
-  icon?: LucideIcon
-  disabled?: boolean
+  icon?: LucideIcon;
+  disabled?: boolean;
   /**иконка справа с функцией */
-  rightIcon?: LucideIcon     
-  onRightIconClick?: () => void 
-}
+  rightIcon?: LucideIcon;
+  onRightIconClick?: () => void;
+};
 
 export function Input({
   type = 'text',
@@ -30,7 +30,6 @@ export function Input({
 }: InputProps) {
   return (
     <div className="relative w-full">
-
       {Icon && (
         <div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none">
           <Icon size={15} />
@@ -52,13 +51,13 @@ export function Input({
           'disabled:opacity-50 disabled:pointer-events-none',
           Icon ? 'pl-10' : 'pl-4',
           RightIcon ? 'pr-10' : 'pr-4',
-          className,
+          className
         )}
       />
 
       {/* Иконка справа — кнопка если передан onRightIconClick */}
-      {RightIcon && (
-        onRightIconClick ? (
+      {RightIcon &&
+        (onRightIconClick ? (
           <button
             type="button"
             onClick={onRightIconClick}
@@ -70,8 +69,7 @@ export function Input({
           <div className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none">
             <RightIcon size={15} />
           </div>
-        )
-      )}
+        ))}
     </div>
-  )
+  );
 }

@@ -1,16 +1,16 @@
-import { cn } from '@/lib/cn'
+import { cn } from '@/lib/cn';
 
 type CheckboxProps = {
-  label?: string
-  className?: string
-  checked?: boolean
-  onChange?: (checked: boolean) => void
-  disabled?: boolean
-  id?: string
-  name?: string
-  required?: boolean
-  error?: string        // текст ошибки под чекбоксом
-}
+  label?: string;
+  className?: string;
+  checked?: boolean;
+  onChange?: (checked: boolean) => void;
+  disabled?: boolean;
+  id?: string;
+  name?: string;
+  required?: boolean;
+  error?: string; // текст ошибки под чекбоксом
+};
 
 export function Checkbox({
   label,
@@ -29,7 +29,7 @@ export function Checkbox({
         htmlFor={id}
         className={cn(
           'flex items-center gap-2 cursor-pointer select-none',
-          disabled && 'cursor-not-allowed opacity-50',
+          disabled && 'cursor-not-allowed opacity-50'
         )}
       >
         <input
@@ -51,9 +51,7 @@ export function Checkbox({
         )}
       </label>
 
-      {error && (
-        <p className="text-xs text-destructive pl-6">{error}</p>
-      )}
+      {error && <p className="text-xs text-destructive pl-6">{error}</p>}
     </div>
-  )
+  );
 }

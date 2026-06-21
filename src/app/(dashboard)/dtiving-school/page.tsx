@@ -1,7 +1,3 @@
 export default function DrivingSchoolPage() {
-    return (
-        <div>
-            DrivingSchoolPage
-        </div>
-    )
+  return <div>DrivingSchoolPage</div>;
 }

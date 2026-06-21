@@ -1,23 +1,24 @@
-import { cn } from "@/lib/cn"
+import { cn } from '@/lib/cn';
 
-type ButtonMode = 'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive'
+type ButtonMode = 'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive';
 
 type ButtonProps = {
-  mode?: ButtonMode
-  type?: 'button' | 'submit' | 'reset'
-  className?: string
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
-  disabled?: boolean
-  children: React.ReactNode
-}
+  mode?: ButtonMode;
+  type?: 'button' | 'submit' | 'reset';
+  className?: string;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  disabled?: boolean;
+  children: React.ReactNode;
+};
 
 const modeStyles: Record<ButtonMode, string> = {
-  primary:     'bg-primary text-primary-foreground hover:bg-primary/90',
-  secondary:   'bg-secondary text-secondary-foreground hover:bg-secondary/80',
-  outline:     'border border-border bg-transparent hover:bg-secondary',
-  ghost:       'hover:bg-accent hover:text-accent-foreground',
-  destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
-}
+  primary: 'bg-primary text-primary-foreground hover:bg-primary/90',
+  secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
+  outline: 'border border-border bg-transparent hover:bg-secondary',
+  ghost: 'hover:bg-accent hover:text-accent-foreground',
+  destructive:
+    'bg-destructive text-destructive-foreground hover:bg-destructive/90',
+};
 
 export function Button({
   mode = 'primary',
@@ -40,10 +41,10 @@ export function Button({
         // стили по mode
         modeStyles[mode],
         // кастомные стили конкретной кнопки
-        className,
+        className
       )}
     >
       {children}
     </button>
-  )
+  );
 }
