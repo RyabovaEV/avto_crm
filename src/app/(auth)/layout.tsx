@@ -1,4 +1,5 @@
 import { AuthTabs } from "@/components/auth/AuthTabs";
+import { Logo } from "@/components/ui";
 import { Bus } from "lucide-react";
 import { ReactNode } from "react";
 
@@ -29,17 +30,7 @@ export default function AuthLayout({
         {/* Center logo block */}
         <div className="relative z-10 flex flex-col items-start gap-8">
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 bg-blue-400/20 rounded-2xl flex items-center justify-center border border-blue-400/30">
-              <Bus size={28} className="text-blue-300" />
-            </div>
-            <div>
-              <div className="text-white text-2xl font-bold tracking-tight">
-                ООО &quot;Авто&quot;
-              </div>
-              <div className="text-blue-300 text-sm">
-                Транспортное предприятие
-              </div>
-            </div>
+            <Logo />
           </div>
           <div className="space-y-3">
             <p className="text-white/80 text-base leading-relaxed max-w-xs">

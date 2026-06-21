@@ -1,4 +1,4 @@
-import { Check, ChevronRight, Mail } from "lucide-react";
+import { ChevronRight, Mail } from "lucide-react";
 import { Button, Input } from "../ui";
 import Link from "next/link";
 
