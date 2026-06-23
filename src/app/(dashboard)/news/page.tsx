@@ -1,4 +1,4 @@
-import { Header } from '@/components/ui';
+import { Header } from '@/components/layout/Header';
 
 export default function NewsPage() {
   return (
