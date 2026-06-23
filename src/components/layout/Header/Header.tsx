@@ -5,7 +5,7 @@ type HeaderProps = {
 
 export function Header({ title, description }: HeaderProps) {
   return (
-    <header className="h-14 flex items-center justify-between px-6 bg-card border-b border-border flex-shrink-0 shadow-sm">
+    <header className="h-14 flex items-center justify-between px-6 bg-card border-b border-border shrink-0 shadow-sm">
       <div className="flex items-center gap-3">
         <div className="w-px h-6 bg-primary/30 rounded-full" />
         <div>

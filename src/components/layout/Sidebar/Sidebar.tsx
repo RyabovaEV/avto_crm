@@ -2,6 +2,7 @@ import { SidebarHeader } from './SidebarHeader';
 import { SidebarModules } from './SidebarModules';
 import { SidebarNav } from './SidebarNav';
 import { SidebarUser } from './SidebarUser';
+import { SectionLabel } from './ui/SectionLabel';
 
 export function Sidebar() {
   return (
@@ -24,7 +25,14 @@ export function Sidebar() {
       </div>
       <div className="h-screen z-10 flex flex-col py-5 ">
         <SidebarHeader />
-        <SidebarNav />
+        <div className="border-b border-sidebar-border p-5">
+          <SectionLabel label="Навигация" />
+          <SidebarNav />
+        </div>
+        <div className="grow border-b border-sidebar-border p-5">
+          <SectionLabel label="Доступные модули" />
+          <SidebarModules />
+        </div>
         <SidebarModules />
         <SidebarUser />
       </div>
