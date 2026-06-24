@@ -46,7 +46,7 @@ export function Input({
         className={cn(
           'w-full pr-4 py-2.5 rounded-lg border border-border',
           'bg-white text-foreground text-sm',
-          'focus:outline-none focus:ring-2 focus:ring-ring transition-shadow',
+          'focus:outline-none focus:ring-1 focus:ring-ring transition-shadow',
           'placeholder:text-muted-foreground',
           'disabled:opacity-50 disabled:pointer-events-none',
           Icon ? 'pl-10' : 'pl-4',

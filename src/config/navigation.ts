@@ -6,6 +6,10 @@ export type NavItem = {
 
 export const NAV_ITEM: NavItem[] = [
   {
+    label: 'Настройки',
+    href: '/dashboard/settings',
+  },
+  {
     label: 'Новости',
     href: '/dashboard/news',
   },

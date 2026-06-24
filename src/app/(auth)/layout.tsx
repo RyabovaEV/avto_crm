@@ -1,4 +1,3 @@
-import { AuthTabs } from '@/components/auth/AuthTabs';
 import { Logo } from '@/components/ui';
 import { Bus } from 'lucide-react';
 import { ReactNode } from 'react';
@@ -68,7 +67,6 @@ export default function AuthLayout({
               ООО &quot;Авто&quot;
             </span>
           </div>
-          <AuthTabs />
           {children}
         </div>
       </div>
