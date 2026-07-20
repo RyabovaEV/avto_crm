@@ -20,8 +20,8 @@
   --destructive: theme('colors.red.600');
   --destructive-foreground: theme('colors.white');
   --border: color-mix(in srgb, theme('colors.blue.600') 14%, transparent);
-  --input: transparent;
-  --input-background: theme('colors.blue.50');
+  --input: theme('colors.slate-50');
+  --input-background: theme('colors.blue-50');
   --switch-background: theme('colors.blue.300');
   --ring: theme('colors.blue.600');
   --chart-1: theme('colors.blue.600');
@@ -38,6 +38,7 @@
   --sidebar-accent-foreground: theme('colors.white');
   --sidebar-border: color-mix(in srgb, theme('colors.white') 10%, transparent);
   --sidebar-ring: theme('colors.blue.400');
+  --button-hover: theme('colors.blue.700');
 }
 
 .dark {
@@ -73,6 +74,7 @@
   --sidebar-accent-foreground: theme('colors.white');
   --sidebar-border: theme('colors.slate.700');
   --sidebar-ring: theme('colors.slate.600');
+  --button-hover: theme('colors.slate.200');
 }
 
 @theme inline {
@@ -114,6 +116,7 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-hover: var(--button-hover);
 }
 
 body {

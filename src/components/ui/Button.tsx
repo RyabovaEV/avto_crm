@@ -12,7 +12,7 @@ type ButtonProps = {
 };
 
 const modeStyles: Record<ButtonMode, string> = {
-  primary: 'bg-primary text-primary-foreground hover:bg-primary/90',
+  primary: 'bg-primary text-primary-foreground hover:bg-hover',
   secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
   outline: 'border border-border bg-transparent hover:bg-secondary',
   ghost: 'hover:bg-accent hover:text-accent-foreground',
@@ -35,7 +35,7 @@ export function Button({
       disabled={disabled}
       className={cn(
         // базовые стили всегда
-        'inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors cursor-pointer',
+        'inline-flex items-center justify-center gap-2 rounded-lg px-10 py-2.5 text-sm font-medium transition-colors cursor-pointer',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
         'disabled:pointer-events-none disabled:opacity-50',
         // стили по mode

@@ -9,7 +9,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+   provider = "postgresql"
 }
 
 model User {
@@ -26,4 +26,26 @@ model News {
   news      String
   isMain    Boolean  @default(false)
   createdAt DateTime @default(now())
+}
+
+model CompanyInfo {
+  id           Int            @id @default(autoincrement())
+  name         String
+  email        String?
+  address      String?
+  workingHours String?
+  directorName String?
+  deputyName   String?
+  phones       CompanyPhone[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+}
+
+model CompanyPhone {
+  id            Int         @id @default(autoincrement())
+  phone         String
+  label         String?
+  signature     String?
+  companyInfo   CompanyInfo @relation(fields: [companyInfoId], references: [id])
+  companyInfoId Int
 }
