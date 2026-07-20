@@ -1,10 +1,12 @@
 import { Header } from '@/components/layout/Header';
+import { InsuranceForm } from '@/components/settings/InsuranceForm';
 import { OrganizationForm } from '@/components/settings/OrganizationForm';
 import { Section } from '@/components/ui';
 import { prisma } from '@/lib/db';
 
 export default async function SettingsPage() {
   const company = await prisma.companyInfo.findFirst();
+  const insurance = await prisma.companyInsurance.findFirst();
   return (
     <>
       <Header title="Настройки" description="Основная информация о компании" />
@@ -12,7 +14,9 @@ export default async function SettingsPage() {
         <Section title="Основная информация">
           <OrganizationForm initialData={company} />
         </Section>
-        <Section title="Страхование">Страхование</Section>
+        <Section title="Страхование">
+          <InsuranceForm initialData={insurance} />
+        </Section>
         <Section title="Телефоны">Телефоны</Section>
       </div>
     </>

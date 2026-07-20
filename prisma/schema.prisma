@@ -37,6 +37,7 @@ model CompanyInfo {
   directorName String?
   deputyName   String?
   phones       CompanyPhone[]
+  insurances CompanyInsurance?
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
 }
@@ -48,4 +49,17 @@ model CompanyPhone {
   signature     String?
   companyInfo   CompanyInfo @relation(fields: [companyInfoId], references: [id])
   companyInfoId Int
+}
+
+model CompanyInsurance {
+  id            Int         @id @default(autoincrement())
+  insurer     String
+  number        String
+  dateBegin    DateTime
+  dateEnd      DateTime
+
+  companyId   Int      @unique
+  company     CompanyInfo @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  updatedAt   DateTime @updatedAt
 }

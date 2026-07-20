@@ -4,7 +4,7 @@ import { useId } from 'react';
 
 type InputProps = {
   label?: string;
-  type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'search';
+  type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'search' | 'date';
   className?: string;
   placeholder?: string;
   value?: string;
