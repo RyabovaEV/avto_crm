@@ -21,11 +21,22 @@ export function InsuranceForm({ initialData }: Props) {
   });
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
+
+  function updateField<K extends keyof typeof form>(key: K, value: string) {
+    setForm((prev) => ({ ...prev, [key]: value }));
+    setSuccess(false);
+  }
+
+  function delay(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setIsSaving(true);
     setError(null);
+    setSuccess(false);
 
     try {
       const response = await fetch('/api/insurance', {
@@ -37,35 +48,50 @@ export function InsuranceForm({ initialData }: Props) {
       if (!response.ok) {
         throw new Error('Ошибка сохранения');
       }
-    } catch {
-      setError('Не удалось сохранить данные');
-    } finally {
+
+      await delay(300);
       setIsSaving(false);
+      setSuccess(true);
+
+      setTimeout(() => setSuccess(false), 1000);
+    } catch {
+      setIsSaving(false);
+      setError('Не удалось сохранить данные');
     }
   }
+
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form
+      onSubmit={handleSubmit}
+      isSaving={isSaving}
+      error={error}
+      success={success}
+    >
       <Input
         label="Страховая компания"
         value={form.insurer}
-        onChange={(e) => setForm({ ...form, insurer: e.target.value })}
+        onChange={(e) => updateField('insurer', e.target.value)}
+        disabled={isSaving}
       />
       <Input
         label="Номер полиса"
         value={form.number}
-        onChange={(e) => setForm({ ...form, number: e.target.value })}
+        onChange={(e) => updateField('number', e.target.value)}
+        disabled={isSaving}
       />
       <Input
         label="Дата начала действия"
         type="date"
         value={form.dateBegin}
-        onChange={(e) => setForm({ ...form, dateBegin: e.target.value })}
+        onChange={(e) => updateField('dateBegin', e.target.value)}
+        disabled={isSaving}
       />
       <Input
         label="Дата окончания действия"
         type="date"
         value={form.dateEnd}
-        onChange={(e) => setForm({ ...form, dateEnd: e.target.value })}
+        onChange={(e) => updateField('dateEnd', e.target.value)}
+        disabled={isSaving}
       />
     </Form>
   );

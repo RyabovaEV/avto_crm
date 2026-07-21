@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Button, Input } from '../ui';
+import { Form, Input } from '../ui';
 import { CompanyInfo } from '@/generated/prisma/client';
 
 type Props = {
@@ -19,11 +19,22 @@ export function OrganizationForm({ initialData }: Props) {
   });
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
+
+  function updateField<K extends keyof typeof form>(key: K, value: string) {
+    setForm((prev) => ({ ...prev, [key]: value }));
+    setSuccess(false);
+  }
+
+  function delay(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setIsSaving(true);
     setError(null);
+    setSuccess(false);
 
     try {
       const response = await fetch('/api/organization', {
@@ -35,51 +46,56 @@ export function OrganizationForm({ initialData }: Props) {
       if (!response.ok) {
         throw new Error('Ошибка сохранения');
       }
-    } catch {
-      setError('Не удалось сохранить данные');
-    } finally {
+
+      await delay(300);
       setIsSaving(false);
+      setSuccess(true);
+
+      setTimeout(() => setSuccess(false), 1000);
+    } catch {
+      setIsSaving(false);
+      setError('Не удалось сохранить данные');
     }
   }
 
   return (
-    <form className="flex flex-col gap-10" onSubmit={handleSubmit}>
-      <div className="flex flex-col gap-5">
-        <Input
-          label="Название организации"
-          value={form.name}
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
-        />
-        <Input
-          label="E-mail"
-          type="email"
-          value={form.email}
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
-        />
-        <Input
-          label="Адрес"
-          value={form.address}
-          onChange={(e) => setForm({ ...form, address: e.target.value })}
-        />
-        <Input
-          label="Часы работы"
-          value={form.workingHours}
-          onChange={(e) => setForm({ ...form, workingHours: e.target.value })}
-        />
-        <Input
-          label="Директор"
-          value={form.directorName}
-          onChange={(e) => setForm({ ...form, directorName: e.target.value })}
-        />
-        <Input
-          label="Заместитель директора"
-          value={form.deputyName}
-          onChange={(e) => setForm({ ...form, deputyName: e.target.value })}
-        />
-      </div>
-      <Button className="self-end" type="submit">
-        Сохранить
-      </Button>
-    </form>
+    <Form
+      onSubmit={handleSubmit}
+      isSaving={isSaving}
+      error={error}
+      success={success}
+    >
+      <Input
+        label="Название организации"
+        value={form.name}
+        onChange={(e) => updateField('name', e.target.value)}
+      />
+      <Input
+        label="E-mail"
+        type="email"
+        value={form.email}
+        onChange={(e) => updateField('email', e.target.value)}
+      />
+      <Input
+        label="Адрес"
+        value={form.address}
+        onChange={(e) => updateField('address', e.target.value)}
+      />
+      <Input
+        label="Часы работы"
+        value={form.workingHours}
+        onChange={(e) => updateField('workingHours', e.target.value)}
+      />
+      <Input
+        label="Директор"
+        value={form.directorName}
+        onChange={(e) => updateField('directorName', e.target.value)}
+      />
+      <Input
+        label="Заместитель директора"
+        value={form.deputyName}
+        onChange={(e) => updateField('deputyName', e.target.value)}
+      />
+    </Form>
   );
 }
