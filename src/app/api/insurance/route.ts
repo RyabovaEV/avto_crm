@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/db';
+import { insuranceSchema } from '@/lib/validation/insurance';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
@@ -17,20 +18,21 @@ export async function GET() {
 export async function PATCH(request: Request) {
   try {
     const body = await request.json();
+    const result = insuranceSchema.safeParse(body);
+
+    if (!result.success) {
+      const flat = result.error.flatten().fieldErrors;
+      const fieldErrors = Object.fromEntries(
+        Object.entries(flat).map(([key, msgs]) => [key, msgs?.[0]])
+      );
+      return NextResponse.json({ fieldErrors }, { status: 400 });
+    }
 
     const insurance = await prisma.companyInsurance.upsert({
       where: { companyId: 1 },
-      update: {
-        insurer: body.insurer,
-        number: body.number,
-        dateBegin: new Date(body.dateBegin),
-        dateEnd: new Date(body.dateEnd),
-      },
+      update: result.data,
       create: {
-        insurer: body.insurer,
-        number: body.number,
-        dateBegin: new Date(body.dateBegin),
-        dateEnd: new Date(body.dateEnd),
+        ...result.data,
         companyId: 1,
       },
     });

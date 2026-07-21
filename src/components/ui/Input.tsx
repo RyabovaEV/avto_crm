@@ -16,6 +16,7 @@ type InputProps = {
   /**иконка справа с функцией */
   rightIcon?: LucideIcon;
   onRightIconClick?: () => void;
+  error?: string | null;
 };
 
 export function Input({
@@ -30,6 +31,7 @@ export function Input({
   disabled,
   rightIcon: RightIcon,
   onRightIconClick,
+  error,
 }: InputProps) {
   const id = useId();
   return (
@@ -64,6 +66,7 @@ export function Input({
             'disabled:opacity-50 disabled:pointer-events-none',
             Icon ? 'pl-10' : 'pl-4',
             RightIcon ? 'pr-10' : 'pr-4',
+            error && 'border-destructive focus:ring-destructive',
             className
           )}
         />
@@ -84,6 +87,7 @@ export function Input({
             </div>
           ))}
       </div>
+      {error && <p className="text-sm text-destructive">{error}</p>}
     </div>
   );
 }
