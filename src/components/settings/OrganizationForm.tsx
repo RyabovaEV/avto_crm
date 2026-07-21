@@ -1,62 +1,26 @@
 'use client';
 
-import { useState } from 'react';
 import { Form, Input } from '../ui';
 import { CompanyInfo } from '@/generated/prisma/client';
+import { useSettingsForm } from '@/hooks/useSettingsForm';
 
 type Props = {
   initialData: CompanyInfo | null;
 };
 
 export function OrganizationForm({ initialData }: Props) {
-  const [form, setForm] = useState({
-    name: initialData?.name ?? '',
-    email: initialData?.email ?? '',
-    address: initialData?.address ?? '',
-    workingHours: initialData?.workingHours ?? '',
-    directorName: initialData?.directorName ?? '',
-    deputyName: initialData?.deputyName ?? '',
-  });
-  const [isSaving, setIsSaving] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
-
-  function updateField<K extends keyof typeof form>(key: K, value: string) {
-    setForm((prev) => ({ ...prev, [key]: value }));
-    setSuccess(false);
-  }
-
-  function delay(ms: number) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setIsSaving(true);
-    setError(null);
-    setSuccess(false);
-
-    try {
-      const response = await fetch('/api/organization', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      });
-
-      if (!response.ok) {
-        throw new Error('Ошибка сохранения');
-      }
-
-      await delay(300);
-      setIsSaving(false);
-      setSuccess(true);
-
-      setTimeout(() => setSuccess(false), 1000);
-    } catch {
-      setIsSaving(false);
-      setError('Не удалось сохранить данные');
-    }
-  }
+  const { form, isSaving, error, success, updateField, handleSubmit } =
+    useSettingsForm(
+      {
+        name: initialData?.name ?? '',
+        email: initialData?.email ?? '',
+        address: initialData?.address ?? '',
+        workingHours: initialData?.workingHours ?? '',
+        directorName: initialData?.directorName ?? '',
+        deputyName: initialData?.deputyName ?? '',
+      },
+      '/api/organization'
+    );
 
   return (
     <Form

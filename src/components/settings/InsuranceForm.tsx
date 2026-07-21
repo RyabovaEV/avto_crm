@@ -2,63 +2,27 @@
 
 import { CompanyInsurance } from '@/generated/prisma/client';
 import { Form, Input } from '../ui';
-import { useState } from 'react';
+import { useSettingsForm } from '@/hooks/useSettingsForm';
 
 type Props = {
   initialData: CompanyInsurance | null;
 };
 
 export function InsuranceForm({ initialData }: Props) {
-  const [form, setForm] = useState({
-    insurer: initialData?.insurer ?? '',
-    number: initialData?.number ?? '',
-    dateBegin: initialData?.dateBegin
-      ? new Date(initialData.dateBegin).toISOString().split('T')[0]
-      : '',
-    dateEnd: initialData?.dateEnd
-      ? new Date(initialData.dateEnd).toISOString().split('T')[0]
-      : '',
-  });
-  const [isSaving, setIsSaving] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
-
-  function updateField<K extends keyof typeof form>(key: K, value: string) {
-    setForm((prev) => ({ ...prev, [key]: value }));
-    setSuccess(false);
-  }
-
-  function delay(ms: number) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setIsSaving(true);
-    setError(null);
-    setSuccess(false);
-
-    try {
-      const response = await fetch('/api/insurance', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      });
-
-      if (!response.ok) {
-        throw new Error('Ошибка сохранения');
-      }
-
-      await delay(300);
-      setIsSaving(false);
-      setSuccess(true);
-
-      setTimeout(() => setSuccess(false), 1000);
-    } catch {
-      setIsSaving(false);
-      setError('Не удалось сохранить данные');
-    }
-  }
+  const { form, isSaving, error, success, updateField, handleSubmit } =
+    useSettingsForm(
+      {
+        insurer: initialData?.insurer ?? '',
+        number: initialData?.number ?? '',
+        dateBegin: initialData?.dateBegin
+          ? new Date(initialData.dateBegin).toISOString().split('T')[0]
+          : '',
+        dateEnd: initialData?.dateEnd
+          ? new Date(initialData.dateEnd).toISOString().split('T')[0]
+          : '',
+      },
+      '/api/insurance'
+    );
 
   return (
     <Form
