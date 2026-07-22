@@ -3,10 +3,7 @@
 import { CompanyInsurance } from '@/generated/prisma/client';
 import { Form, Input } from '../ui';
 import { useSettingsForm } from '@/hooks/useSettingsForm';
-import {
-  InsuranceFormInput,
-  insuranceSchema,
-} from '@/lib/validation/insurance';
+import { insuranceSchema } from '@/lib/validation/insurance';
 
 type Props = {
   initialData: CompanyInsurance | null;

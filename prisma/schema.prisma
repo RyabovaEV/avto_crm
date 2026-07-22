@@ -47,6 +47,7 @@ model CompanyPhone {
   phone         String
   label         String?
   signature     String?
+  createdAt     DateTime    @default(now())
   companyInfo   CompanyInfo @relation(fields: [companyInfoId], references: [id])
   companyInfoId Int
 }
