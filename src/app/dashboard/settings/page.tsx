@@ -1,12 +1,17 @@
 import { Header } from '@/components/layout/Header';
 import { InsuranceForm } from '@/components/settings/InsuranceForm';
 import { OrganizationForm } from '@/components/settings/OrganizationForm';
+import { PhoneSection } from '@/components/settings/PhoneSection';
 import { Section } from '@/components/ui';
 import { prisma } from '@/lib/db';
 
 export default async function SettingsPage() {
   const company = await prisma.companyInfo.findFirst();
   const insurance = await prisma.companyInsurance.findFirst();
+  const phones = await prisma.companyPhone.findMany({
+    where: { companyInfoId: 1 },
+    orderBy: { id: 'asc' },
+  });
   return (
     <>
       <Header title="Настройки" description="Основная информация о компании" />
@@ -17,7 +22,9 @@ export default async function SettingsPage() {
         <Section title="Страхование">
           <InsuranceForm initialData={insurance} />
         </Section>
-        <Section title="Телефоны">Телефоны</Section>
+        <Section title="Телефоны" buttonLabel="Добавить телефон">
+          <PhoneSection initialData={phones} />
+        </Section>
       </div>
     </>
   );
