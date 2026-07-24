@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useAsyncAction } from './useAsyncAction';
 import { z } from 'zod';
+import { validateWithSchema } from '@/lib/validateWithSchems';
 
 export function useSettingsForm<Schema extends z.ZodObject<z.ZodRawShape>>(
   initialForm: z.input<Schema>,
@@ -25,14 +26,9 @@ export function useSettingsForm<Schema extends z.ZodObject<z.ZodRawShape>>(
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    const result = schema.safeParse(form);
+    const result = validateWithSchema(schema, form);
     if (!result.success) {
-      const errors: Partial<Record<keyof FormInput, string>> = {};
-      for (const issue of result.error.issues) {
-        const key = issue.path[0] as keyof FormInput;
-        if (!errors[key]) errors[key] = issue.message;
-      }
-      setFieldErrors(errors);
+      setFieldErrors(result.fieldErrors);
       return;
     }
 
