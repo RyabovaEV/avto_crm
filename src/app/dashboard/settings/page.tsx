@@ -1,7 +1,7 @@
 import { Header } from '@/components/layout/Header';
 import { InsuranceForm } from '@/components/settings/InsuranceForm';
 import { OrganizationForm } from '@/components/settings/OrganizationForm';
-import { PhoneSection } from '@/components/settings/PhoneSection';
+import { PhonesSection } from '@/components/settings/phones/PhoneSection';
 import { Section } from '@/components/ui';
 import { prisma } from '@/lib/db';
 
@@ -22,9 +22,7 @@ export default async function SettingsPage() {
         <Section title="Страхование">
           <InsuranceForm initialData={insurance} />
         </Section>
-        <Section title="Телефоны" buttonLabel="Добавить телефон">
-          <PhoneSection initialData={phones} />
-        </Section>
+        <PhonesSection initialData={phones} />
       </div>
     </>
   );

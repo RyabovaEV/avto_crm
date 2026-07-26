@@ -1,17 +1,22 @@
 import { useId } from 'react';
 import { Button } from './Button';
+import { type LucideIcon } from 'lucide-react';
 
 type SectionProps = {
   title: string;
   buttonLabel?: string;
-  //onButtonClick?: () => void;
+  buttonIcon?: LucideIcon;
+  onButtonClick?: () => void;
+  buttonDisabled?: boolean;
   children: React.ReactNode;
 };
 
 export function Section({
   title,
   buttonLabel,
-  //onButtonClick,
+  buttonIcon,
+  onButtonClick,
+  buttonDisabled,
   children,
 }: SectionProps) {
   const titleId = useId();
@@ -24,7 +29,16 @@ export function Section({
         <h2 id={titleId} className="font-bold text-foreground">
           {title}
         </h2>
-        {buttonLabel && <Button mode="outline">{buttonLabel}</Button>}
+        {buttonLabel && (
+          <Button
+            mode="outline"
+            icon={buttonIcon}
+            onClick={onButtonClick}
+            disabled={buttonDisabled}
+          >
+            {buttonLabel}
+          </Button>
+        )}
       </header>
 
       <div className="space-y-3">{children}</div>

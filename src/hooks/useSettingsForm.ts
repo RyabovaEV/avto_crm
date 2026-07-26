@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useAsyncAction } from './useAsyncAction';
 import { z } from 'zod';
-import { validateWithSchema } from '@/lib/validateWithSchems';
+import { validateWithSchema } from '@/lib/validateWithSchema';
 
 export function useSettingsForm<Schema extends z.ZodObject<z.ZodRawShape>>(
   initialForm: z.input<Schema>,

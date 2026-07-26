@@ -1,4 +1,5 @@
 import { cn } from '@/lib/cn';
+import { type LucideIcon } from 'lucide-react';
 
 type ButtonMode = 'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive';
 
@@ -8,6 +9,7 @@ type ButtonProps = {
   className?: string;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   disabled?: boolean;
+  icon?: LucideIcon;
   children: React.ReactNode;
 };
 
@@ -26,6 +28,7 @@ export function Button({
   className,
   onClick,
   disabled,
+  icon: Icon,
   children,
 }: ButtonProps) {
   return (
@@ -44,6 +47,7 @@ export function Button({
         className
       )}
     >
+      {Icon && <Icon size={15} />}
       {children}
     </button>
   );
