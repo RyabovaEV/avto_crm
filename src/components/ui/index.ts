@@ -4,3 +4,4 @@ export { Checkbox } from './Checkbox';
 export { Logo } from './Logo';
 export { Section } from './Section';
 export { Form } from './Form';
+export { SectionSkeleton } from './SectionSkeleton';

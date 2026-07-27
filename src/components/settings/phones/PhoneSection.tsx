@@ -1,7 +1,7 @@
 'use client';
 
 import { CompanyPhone } from '@/generated/prisma/client';
-import { Button, Section } from '../../ui';
+import { Section } from '../../ui';
 import { Plus } from 'lucide-react';
 import { phoneSchema, PhoneFormInput } from '@/lib/validation/phone';
 import { useEditableList } from '@/hooks/useEditableList';
