@@ -1,9 +1,10 @@
-import { Header } from '@/components/layout/Header';
+import { PageContainer } from '@/components/layout/PageContainer';
+import NewsSection from '@/components/news/NewsSection';
 
 export default function NewsPage() {
   return (
-    <>
-      <Header title="Новости" description="Объявления и обновления компании" />
-    </>
+    <PageContainer title="Новости" description="Последние новости и обновления">
+      <NewsSection />
+    </PageContainer>
   );
 }

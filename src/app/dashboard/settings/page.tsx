@@ -1,4 +1,4 @@
-import { Header } from '@/components/layout/Header';
+import { PageContainer } from '@/components/layout/PageContainer';
 import { InsuranceForm } from '@/components/settings/InsuranceForm';
 import { OrganizationForm } from '@/components/settings/OrganizationForm';
 import { PhonesSection } from '@/components/settings/phones/PhoneSection';
@@ -13,20 +13,20 @@ export default async function SettingsPage() {
     orderBy: { id: 'asc' },
   });
   return (
-    <>
-      <Header title="Настройки" description="Основная информация о компании" />
-      <div className="flex-1 overflow-y-auto p-4 sm:p-10 flex flex-col gap-4">
-        <Section title="Основная информация">
-          <OrganizationForm initialData={company} />
-        </Section>
+    <PageContainer
+      title="Настройки"
+      description="Основная информация о компании"
+    >
+      <Section title="Основная информация">
+        <OrganizationForm initialData={company} />
+      </Section>
 
-        <div className="grid grid-cols-1 gap-4 xl:grid-cols-2 items-start">
-          <Section title="Страхование">
-            <InsuranceForm initialData={insurance} />
-          </Section>
-          <PhonesSection initialData={phones} />
-        </div>
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-2 items-start">
+        <Section title="Страхование">
+          <InsuranceForm initialData={insurance} />
+        </Section>
+        <PhonesSection initialData={phones} />
       </div>
-    </>
+    </PageContainer>
   );
 }
