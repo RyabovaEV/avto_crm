@@ -27,7 +27,13 @@ export function PhoneFormCard({
   onCancel,
 }: Props) {
   return (
-    <div className="flex flex-col gap-4 p-4 rounded-xl border border-primary/40 bg-primary/5">
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        onSave();
+      }}
+      className="flex flex-col gap-4 p-4 rounded-xl border border-primary/40"
+    >
       <div className="flex items-center justify-between">
         <span className="text-sm font-semibold text-foreground">{title}</span>
         <button
@@ -72,7 +78,7 @@ export function PhoneFormCard({
 
       <div className="flex items-center gap-4 pt-1">
         <Button
-          type="button"
+          type="submit"
           onClick={onSave}
           disabled={isSaving}
           className="px-6 py-2"
@@ -88,6 +94,6 @@ export function PhoneFormCard({
           Отмена
         </button>
       </div>
-    </div>
+    </form>
   );
 }
