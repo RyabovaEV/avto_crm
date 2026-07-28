@@ -130,6 +130,15 @@ body {
     border-color: var(--color-border);
   }
 
+  .w-md-editor {
+    --color-canvas-default: var(--input);
+    --color-fg-default: var(--foreground);
+    --color-border-default: transparent;
+    --color-canvas-subtle: var(--muted);
+    --color-neutral-muted: var(--muted);
+    background-color: transparent !important;
+  }
+
   h1 {
     @apply text-2xl font-medium leading-normal;
   }

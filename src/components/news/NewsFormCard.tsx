@@ -1,6 +1,6 @@
 import { NewsFormInput } from '@/lib/validation/news';
-import { Button, Checkbox, Input } from '../ui';
-import { Check } from 'lucide-react';
+import { Button, Checkbox, Input, MarkdownEditor } from '../ui';
+import { Check, X } from 'lucide-react';
 
 type Props = {
   title: string;
@@ -45,32 +45,53 @@ export function NewsFormCard({
           <X size={16} />
         </button>
       </div>
+      <div className="flex flex-col align-baseline gap-4">
+        <Input
+          label="Дата новости"
+          type="date"
+          value={form.date}
+          onChange={(e) => onChange('date', e.target.value)}
+          disabled={isSaving}
+          error={fieldErrors.date}
+          className=""
+        />
 
-      <Input
-        label="Дата новости"
-        type="date"
-        value={form.date}
-        onChange={(e) => onChange('date', e.target.value)}
-        disabled={isSaving}
-        error={fieldErrors.date}
-      />
+        <MarkdownEditor
+          label="Текст новости"
+          value={form.news}
+          onChange={(v) => onChange('news', v)}
+          placeholder="Введите текст новости"
+          error={fieldErrors.news}
+          disabled={isSaving}
+        />
 
-      <Input
-        label="Заголовок новости"
-        value={form.news}
-        onChange={(e) => onChange('news', e.target.value)}
-        disabled={isSaving}
-        error={fieldErrors.news}
-      />
+        <Checkbox
+          label="Важная новость"
+          checked={form.isMain}
+          onChange={(checked) => onChange('isMain', checked)}
+          disabled={isSaving}
+        />
+      </div>
+
+      {submitError && <p className="text-sm text-destructive">{submitError}</p>}
 
       <div className="flex items-center gap-4 pt-1">
         <Button
           type="submit"
+          onClick={onSave}
           disabled={isSaving}
-          className="bg-primary hover:bg-primary/90 text-primary-foreground"
+          className="px-6 py-2"
         >
-          {isSaving ? 'Сохранение...' : 'Сохранить'}
+          <Check size={15} /> {isSaving ? 'Сохранение...' : 'Сохранить'}
         </Button>
+        <button
+          type="button"
+          onClick={onCancel}
+          disabled={isSaving}
+          className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors disabled:opacity-50"
+        >
+          Отмена
+        </button>
       </div>
     </form>
   );

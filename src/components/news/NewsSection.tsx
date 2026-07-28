@@ -5,6 +5,7 @@ import { Section } from '../ui';
 import { News } from '@/generated/prisma/client';
 import { newsSchema } from '@/lib/validation/news';
 import { useEditableList } from '@/hooks/useEditableList';
+import { NewsFormCard } from './NewsFormCard';
 
 type Props = {
   initialData: News[];
@@ -48,10 +49,21 @@ export default function NewsSection({ initialData }: Props) {
       buttonDisabled={isFormOpen}
     >
       <div className="flex flex-col gap-3">
+        {state.mode === 'creating' && (
+          <NewsFormCard
+            title="Новая новость"
+            form={state.form}
+            fieldErrors={fieldErrors}
+            submitError={submitError}
+            isSaving={isSaving}
+            onChange={updateForm}
+            onSave={handleSave}
+            onCancel={cancel}
+          />
+        )}
+
         {news.length === 0 && state.mode !== 'creating' && (
-          <div className="text-sm text-muted-foreground">
-            Новостей пока нет. Добавьте первую новость.
-          </div>
+          <p className="text-sm text-muted-foreground">Телефоны не добавлены</p>
         )}
       </div>
     </Section>
