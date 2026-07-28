@@ -6,3 +6,4 @@ export { Section } from './Section';
 export { Form } from './Form';
 export { SectionSkeleton } from './SectionSkeleton';
 export { MarkdownEditor } from './MarkdownEditor';
+export { EntityRow } from './EntityRow';
