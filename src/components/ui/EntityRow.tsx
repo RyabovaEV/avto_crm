@@ -23,7 +23,7 @@ export function EntityRow({
   children,
 }: Props) {
   return (
-    <div className="flex items-center gap-3 px-4 py-3 rounded-xl border border-border bg-muted/50">
+    <div className="flex items-top gap-3 px-4 py-3 rounded-xl border border-border bg-muted/50">
       {icon.type === 'icon' ? (
         <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
           <icon.icon size={16} />
@@ -42,7 +42,7 @@ export function EntityRow({
         type="button"
         onClick={onEdit}
         disabled={isDisabled}
-        className="p-2 rounded-lg text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors disabled:opacity-40 disabled:pointer-events-none"
+        className="self-baseline p-2 rounded-lg text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors disabled:opacity-40 disabled:pointer-events-none"
       >
         <Pencil size={15} />
       </button>
@@ -50,7 +50,7 @@ export function EntityRow({
         type="button"
         onClick={onDelete}
         disabled={isDisabled}
-        className="p-2 rounded-lg text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors disabled:opacity-40 disabled:pointer-events-none"
+        className="self-baseline p-2 rounded-lg text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors disabled:opacity-40 disabled:pointer-events-none"
       >
         {isDeleting ? (
           <span className="text-xs">...</span>

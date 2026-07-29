@@ -6,6 +6,7 @@ import { News } from '@/generated/prisma/client';
 import { newsSchema } from '@/lib/validation/news';
 import { useEditableList } from '@/hooks/useEditableList';
 import { NewsFormCard } from './NewsFormCard';
+import { NewsRow } from './NewsRow';
 
 type Props = {
   initialData: News[];
@@ -64,6 +65,31 @@ export default function NewsSection({ initialData }: Props) {
 
         {news.length === 0 && state.mode !== 'creating' && (
           <p className="text-sm text-muted-foreground">Телефоны не добавлены</p>
+        )}
+
+        {news.map((newsItem) =>
+          state.mode === 'editing' && state.id === newsItem.id ? (
+            <NewsFormCard
+              key={newsItem.id}
+              title="Редактирование новости"
+              form={state.form}
+              fieldErrors={fieldErrors}
+              submitError={submitError}
+              isSaving={isSaving}
+              onChange={updateForm}
+              onSave={handleSave}
+              onCancel={cancel}
+            />
+          ) : (
+            <NewsRow
+              key={newsItem.id}
+              newsItem={newsItem}
+              isDisabled={isFormOpen || deletingId !== null}
+              isDeleting={deletingId === newsItem.id}
+              onEdit={() => startEdit(newsItem)}
+              onDelete={() => handleDelete(newsItem.id)}
+            />
+          )
         )}
       </div>
     </Section>

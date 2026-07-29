@@ -1,4 +1,7 @@
 @import 'tailwindcss';
+@import '@uiw/react-md-editor/markdown-editor.css' layer(mdeditor);
+
+@layer base, mdeditor, overrides;
 
 @custom-variant dark (&:is(.dark *));
 
@@ -130,15 +133,6 @@ body {
     border-color: var(--color-border);
   }
 
-  .w-md-editor {
-    --color-canvas-default: var(--input);
-    --color-fg-default: var(--foreground);
-    --color-border-default: transparent;
-    --color-canvas-subtle: var(--muted);
-    --color-neutral-muted: var(--muted);
-    background-color: transparent !important;
-  }
-
   h1 {
     @apply text-2xl font-medium leading-normal;
   }
@@ -150,5 +144,23 @@ body {
   }
   h4 {
     @apply text-base font-medium leading-normal;
+  }
+}
+
+@layer overrides {
+  .wmde-markdown {
+    background-color: transparent !important;
+    color: var(--foreground) !important;
+  }
+
+  .wmde-markdown p,
+  .wmde-markdown ul,
+  .wmde-markdown ol,
+  .wmde-markdown li,
+  .wmde-markdown h1,
+  .wmde-markdown h2,
+  .wmde-markdown h3 {
+    margin: 0 !important;
+    color: var(--foreground) !important;
   }
 }
