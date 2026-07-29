@@ -6,6 +6,7 @@ import { Section } from '@/components/ui';
 import { prisma } from '@/lib/db';
 
 export default async function SettingsPage() {
+  await new Promise((r) => setTimeout(r, 1000));
   const company = await prisma.companyInfo.findFirst();
   const insurance = await prisma.companyInsurance.findFirst();
   const phones = await prisma.companyPhone.findMany({
