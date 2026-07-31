@@ -64,3 +64,71 @@ model CompanyInsurance {
 
   updatedAt   DateTime @updatedAt
 }
+
+enum RouteType {
+  SUBURBAN
+  CITY
+}
+
+enum SeasonType {
+  SUMMER
+  AUTUMN
+  WINTER
+  SPRING
+}
+
+enum DepartureDirection {
+  FROM_START
+  FROM_END
+}
+
+enum DayOfWeek {
+  MON
+  TUE
+  WED
+  THU
+  FRI
+  SAT
+  SUN
+}
+
+model Season {
+  id Int @id @default(autoincrement())
+  type SeasonType @unique
+  periods SeasonPeriod[]
+  routes Route[]
+}
+
+model SeasonPeriod {
+  id Int @id @default(autoincrement())
+  season Season @relation(fields: [seasonId], references: [id], onDelete: Cascade)
+  seasonId Int
+  startMonth Int
+  startDay   Int
+  endMonth   Int
+  endDay     Int
+}
+
+model Route {
+  id Int @id @default(autoincrement())
+  number String
+  name String
+  type RouteType
+  season Season @relation(fields: [seasonId], references: [id])
+  seasonId Int
+  departures RouteDeparture[]
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+
+  @@unique([seasonId, type, number])
+}
+
+model RouteDeparture {
+  id Int @id @default(autoincrement())
+  route Route @relation(fields: [routeId], references: [id], onDelete: Cascade)
+  routeId Int
+  direction DepartureDirection
+  time String
+  daysOfWeek DayOfWeek[]
+  comment String?
+}

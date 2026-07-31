@@ -51,7 +51,7 @@ export function MarkdownEditor({
           height={height ?? 200}
           preview="edit"
           aria-placeholder={placeholder}
-          className="!border-none !shadow-none !bg-transparent"
+          //className="!border-none !shadow-none !bg-transparent"
         />
       </div>
       {error && <p className="text-sm text-destructive">{error}</p>}
