@@ -10,6 +10,14 @@ export const routContextSchema = zod.object({
 
 export type RouteContext = zod.infer<typeof routContextSchema>;
 
+export function parseRouteContext(url: string) {
+  const { searchParams } = new URL(url);
+  return routContextSchema.safeParse({
+    type: searchParams.get('type'),
+    seasonId: searchParams.get('seasonId'),
+  });
+}
+
 export const routeFormSchema = zod.object({
   number: zod.string().min(1, 'Укажите номер маршрута'),
   name: zod.string().min(1, 'Укажите название маршрута'),
