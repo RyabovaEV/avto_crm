@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { z } from 'zod';
 import { useAsyncAction } from './useAsyncAction';
 import { validateWithSchema } from '@/lib/validateWithSchema';
+import { deleteEntity, submitForm } from '@/lib/apiClient';
 
 type EditableListState<FormInput> =
   | { mode: 'idle' }
@@ -74,9 +75,9 @@ export function useEditableList<
   async function handleSave() {
     if (state.mode === 'idle') return;
 
-    const result = validateWithSchema(schema, state.form);
-    if (!result.success) {
-      setFieldErrors(result.fieldErrors);
+    const validation = validateWithSchema(schema, state.form);
+    if (!validation.success) {
+      setFieldErrors(validation.fieldErrors);
       return;
     }
 
@@ -86,28 +87,26 @@ export function useEditableList<
     const url = isCreating ? endpoint : `${endpoint}/${state.id}`;
 
     await handleAsyncAction(async () => {
-      const response = await fetch(url, {
-        method: isCreating ? 'POST' : 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(result.data),
-      });
+      const result = await submitForm<TItem>(
+        url,
+        isCreating ? 'POST' : 'PATCH',
+        validation.data
+      );
 
-      if (response.status === 400) {
-        const data = await response.json();
-        setFieldErrors(data.fieldErrors ?? {});
+      if (!result.success) {
+        setFieldErrors(
+          result.fieldErrors as Partial<Record<keyof FormInput, string>>
+        );
+        setSubmitError('Проверьте поля формы');
         throw new Error('Ошибка валидации');
       }
 
-      if (!response.ok) {
-        setSubmitError('Не удалось сохранить данные');
-        throw new Error('Ошибка сохранения');
-      }
-
-      const saved: TItem = await response.json();
       setItems((prev) =>
         isCreating
-          ? [...prev, saved]
-          : prev.map((item) => (item.id === saved.id ? saved : item))
+          ? [...prev, result.data]
+          : prev.map((item) =>
+              item.id === result.data.id ? result.data : item
+            )
       );
       setState({ mode: 'idle' });
     });
@@ -116,14 +115,14 @@ export function useEditableList<
   async function handleDelete(id: number) {
     setDeletingId(id);
     try {
-      const response = await fetch(`${endpoint}/${id}`, { method: 'DELETE' });
-      if (!response.ok) throw new Error();
+      await deleteEntity(`${endpoint}/${id}`);
       setItems((prev) => prev.filter((item) => item.id !== id));
+    } catch {
+      setSubmitError('Ошибка удаления');
     } finally {
       setDeletingId(null);
     }
   }
-
   return {
     items,
     state,
