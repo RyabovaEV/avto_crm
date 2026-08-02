@@ -2,18 +2,20 @@
 
 import { Section } from '@/components/ui';
 import { Plus } from 'lucide-react';
-import { RouteType, SeasonPeriod } from '@/generated/prisma/client';
+import { RouteType, SeasonPeriod, SeasonType } from '@/generated/prisma/client';
 import {
   useRoutesSchedule,
   RouteWithDepartures,
 } from '@/hooks/useRoutesSchedule';
 import { RouteFormCard } from './RouteFormCard';
 import { RouteRow } from './RouteRow';
-import { formatSeasonPeriods } from '@/lib/seasonPeriod';
+import { formatSeasonPeriods, isCurrentSeason } from '@/lib/seasonPeriod';
+import { Accordion } from '../ui/Accordion';
+import { SEASON_THEME } from '@/config/SeasonTheme';
 
 type Props = {
   seasonId: number;
-  seasonType: string;
+  seasonType: SeasonType;
   seasonTitle: string;
   periods: SeasonPeriod[];
   routeType: RouteType;
@@ -22,6 +24,7 @@ type Props = {
 
 export function SeasonScheduleSection({
   seasonId,
+  seasonType,
   seasonTitle,
   routeType,
   periods,
@@ -46,10 +49,17 @@ export function SeasonScheduleSection({
     handleDelete,
   } = useRoutesSchedule(seasonId, routeType, initialData);
 
+  const theme = SEASON_THEME[seasonType];
+
   return (
-    <Section
-      title={`${seasonTitle} расписание · ${routes.length} маршрутов`}
-      subtitle={`${formatSeasonPeriods(periods)} · ${routes.length} маршрутов`}
+    <Accordion
+      icon={theme.icon}
+      border={theme.border}
+      iconBg={theme.iconBg}
+      iconText={theme.iconText}
+      title={`${seasonTitle} расписание`}
+      count={routes.length}
+      defaultOpen={isCurrentSeason(periods)}
       buttonLabel="Добавить маршрут"
       buttonIcon={Plus}
       onButtonClick={startCreate}
@@ -104,6 +114,6 @@ export function SeasonScheduleSection({
           )
         )}
       </div>
-    </Section>
+    </Accordion>
   );
 }

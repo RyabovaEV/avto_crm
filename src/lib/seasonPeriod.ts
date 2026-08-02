@@ -58,3 +58,22 @@ export function formatSeasonPeriods(periods: SeasonPeriod[]): string {
     )
     .join(', ');
 }
+
+export function isCurrentSeason(periods: SeasonPeriod[]): boolean {
+  const now = new Date();
+  const month = now.getMonth() + 1;
+  const day = now.getDate();
+
+  return periods.some((p) => {
+    const asNumber = (m: number, d: number) => m * 100 + d;
+    const today = asNumber(month, day);
+    const start = asNumber(p.startMonth, p.startDay);
+    const end = asNumber(p.endMonth, p.endDay);
+
+    // период не переходит через Новый год: обычное сравнение
+    if (start <= end) return today >= start && today <= end;
+
+    // период переходит через Новый год (например, 1 нояб. – 31 марта)
+    return today >= start || today <= end;
+  });
+}

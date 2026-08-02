@@ -132,3 +132,49 @@ model RouteDeparture {
   dayOfWeek DayOfWeek[]
   comment String?
 }
+
+enum PriceListType {
+  BASE
+  DANGEROUS_GOODS
+}
+
+model PriceCard {
+  id          Int           @id @default(autoincrement())
+  type        PriceListType
+  description String
+  note        String?
+  price       String
+  termOfStudy String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model Program {
+  id              Int              @id @default(autoincrement())
+  title           String
+  summaryTotal    String
+  summaryTheory   String
+  summaryPractice String
+  sections        ProgramSection[]
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+}
+
+model ProgramSection {
+  id        Int              @id @default(autoincrement())
+  program   Program          @relation(fields: [programId], references: [id], onDelete: Cascade)
+  programId Int
+  title     String
+  subjects  ProgramSubject[]
+}
+
+model ProgramSubject {
+  id        Int            @id @default(autoincrement())
+  section   ProgramSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  sectionId Int
+  name      String
+  total     String
+  theory    String
+  practice  String
+  exam      String
+}
