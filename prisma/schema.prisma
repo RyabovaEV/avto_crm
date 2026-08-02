@@ -129,6 +129,6 @@ model RouteDeparture {
   routeId Int
   direction DepartureDirection
   time String
-  daysOfWeek DayOfWeek[]
+  dayOfWeek DayOfWeek[]
   comment String?
 }

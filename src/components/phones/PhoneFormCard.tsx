@@ -1,4 +1,4 @@
-import { Input, Button } from '../../ui';
+import { Input, Button } from '../ui';
 import { X, Check } from 'lucide-react';
 import { PhoneFormInput } from '@/lib/validation/phone';
 

@@ -4,6 +4,7 @@ import { type LucideIcon } from 'lucide-react';
 
 type SectionProps = {
   title: string;
+  subtitle?: string;
   buttonLabel?: string;
   buttonIcon?: LucideIcon;
   onButtonClick?: () => void;
@@ -13,6 +14,7 @@ type SectionProps = {
 
 export function Section({
   title,
+  subtitle,
   buttonLabel,
   buttonIcon,
   onButtonClick,
@@ -26,9 +28,17 @@ export function Section({
       className="bg-card border border-border rounded-2xl p-6 flex flex-col gap-10"
     >
       <header className="flex align-items justify-between gap-4 flex-wrap">
-        <h2 id={titleId} className="font-bold text-foreground">
-          {title}
-        </h2>
+        <div>
+          <h2 id={titleId} className="font-bold text-foreground">
+            {title}
+          </h2>
+          {subtitle && (
+            <p className="text-xs text-muted-foreground font-mono mt-1">
+              {subtitle}
+            </p>
+          )}
+        </div>
+
         {buttonLabel && (
           <Button
             mode="outline"

@@ -1,10 +1,20 @@
 import zod from 'zod';
-import { dayOfWeekSchema } from './dayOfWeek';
+import { dayOfWeekSchema, DayOfWeekValue } from './dayOfWeek';
 
 const timeSchema = zod
   .string()
   .min(1, 'Укажите время!')
   .regex(/^([01]\d|2[0-3]):[0-5]\d$/, 'Некорректное время, формат ЧЧ:ММ');
+
+export type DepartureEntryErrors = Partial<
+  Record<'time' | 'dayOfWeek' | 'comment', string>
+>;
+
+export type DepartureEntryState = {
+  time: string;
+  dayOfWeek: DayOfWeekValue[];
+  comment: string;
+};
 
 export const departureEntrySchema = zod.object({
   time: timeSchema,

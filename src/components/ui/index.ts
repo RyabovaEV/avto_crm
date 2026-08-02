@@ -7,3 +7,4 @@ export { Form } from './Form';
 export { SectionSkeleton } from './SectionSkeleton';
 export { MarkdownEditor } from './MarkdownEditor';
 export { EntityRow } from './EntityRow';
+export { DayOfWeekPicker } from './DayOfWeekPicker';

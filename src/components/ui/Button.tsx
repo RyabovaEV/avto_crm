@@ -17,7 +17,7 @@ const modeStyles: Record<ButtonMode, string> = {
   primary: 'bg-primary text-primary-foreground hover:bg-hover',
   secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
   outline: 'border border-border bg-transparent hover:bg-secondary',
-  ghost: 'hover:bg-accent hover:text-accent-foreground',
+  ghost: 'px-3 py-1.5 hover:bg-accent hover:text-accent-foreground',
   destructive:
     'bg-destructive text-destructive-foreground hover:bg-destructive/90',
 };

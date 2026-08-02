@@ -1,7 +1,7 @@
 import { PageContainer } from '@/components/layout/PageContainer';
 import { InsuranceForm } from '@/components/settings/InsuranceForm';
 import { OrganizationForm } from '@/components/settings/OrganizationForm';
-import { PhonesSection } from '@/components/settings/phones/PhoneSection';
+import { PhonesSection } from '@/components/phones/PhoneSection';
 import { Section } from '@/components/ui';
 import { prisma } from '@/lib/db';
 

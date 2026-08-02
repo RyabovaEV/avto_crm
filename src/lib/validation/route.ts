@@ -1,5 +1,5 @@
 import zod from 'zod';
-import { departureEntrySchema } from './routeDeparture';
+import { departureEntrySchema, DepartureEntryErrors } from './routeDeparture';
 
 export const routeTypeSchema = zod.enum(['SUBURBAN', 'CITY']);
 
@@ -9,6 +9,13 @@ export const routContextSchema = zod.object({
 });
 
 export type RouteContext = zod.infer<typeof routContextSchema>;
+
+export type RouteFormErrors = {
+  number?: string;
+  name?: string;
+  departuresFromStart?: DepartureEntryErrors[];
+  departuresFromEnd?: DepartureEntryErrors[];
+};
 
 export function parseRouteContext(url: string) {
   const { searchParams } = new URL(url);
