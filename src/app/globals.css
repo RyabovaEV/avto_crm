@@ -32,6 +32,10 @@
   --chart-3: theme('colors.indigo.500');
   --chart-4: theme('colors.red.600');
   --chart-5: theme('colors.green.600');
+  --season-summer: theme('colors.amber.400');
+  --season-autumn: theme('colors.orange.400');
+  --season-winter: theme('colors.sky.400');
+  --season-spring: theme('colors.green.400');
   --radius: 0.375rem;
   --sidebar: theme('colors.blue.900');
   --sidebar-foreground: theme('colors.blue.200');
@@ -107,6 +111,10 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
+  --color-season-summer: var(--season-summer);
+  --color-season-autumn: var(--season-autumn);
+  --color-season-winter: var(--season-winter);
+  --color-season-spring: var(--season-spring);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
