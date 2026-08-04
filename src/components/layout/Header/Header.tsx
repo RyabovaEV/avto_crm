@@ -1,3 +1,5 @@
+import { EnvBadge } from './EnvBadge';
+
 type HeaderProps = {
   title: string;
   description?: string;
@@ -18,6 +20,7 @@ export function Header({ title, description }: HeaderProps) {
         </div>
       </div>
       <div className="flex items-center gap-3">
+        <EnvBadge />
         <div className="text-xs text-muted-foreground font-mono hidden sm:block">
           {new Date().toLocaleDateString('en-GB', {
             day: '2-digit',
