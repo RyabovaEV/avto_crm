@@ -7,22 +7,14 @@ export type NavItem = {
 export const NAV_ITEM: NavItem[] = [
   {
     label: 'Настройки',
-    href: '/dashboard/settings',
+    href: '/settings',
   },
   {
     label: 'Новости',
-    href: '/dashboard/news',
+    href: '/news',
   },
   {
     label: 'Расписание',
-    href: '/dashboard/schedule',
-  },
-  {
-    label: 'Автошкола',
-    href: '/dashboard/driving-school',
-  },
-  {
-    label: 'Вакансии',
-    href: '/dashboard/vacancies',
+    href: '/schedule',
   },
 ];

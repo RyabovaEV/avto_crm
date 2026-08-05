@@ -1,9 +1,4 @@
-import {
-  Briefcase,
-  CalendarDays,
-  GraduationCap,
-  Newspaper,
-} from 'lucide-react';
+import { CalendarDays, Newspaper, Settings } from 'lucide-react';
 
 export function SidebarModules() {
   return (
@@ -14,8 +9,7 @@ export function SidebarModules() {
           icon: <Newspaper size={11} />,
         },
         { label: 'Расписание', icon: <CalendarDays size={11} /> },
-        { label: 'Автошкола', icon: <GraduationCap size={11} /> },
-        { label: 'Вакансии', icon: <Briefcase size={11} /> },
+        { label: 'Настройки', icon: <Settings size={11} /> },
       ].map((m) => (
         <div
           key={m.label}

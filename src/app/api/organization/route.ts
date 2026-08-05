@@ -16,9 +16,12 @@ export const PATCH = withApiErrorHandling(
     const parsed = await parseRequestBody(request, organizationSchema);
     if ('response' in parsed) return parsed.response;
 
-    const company = await prisma.companyInfo.update({
+    const company = await prisma.companyInfo.upsert({
       where: { id: 1 },
-      data: parsed.data,
+      update: parsed.data,
+      create: {
+        ...parsed.data,
+      },
     });
 
     return NextResponse.json(company);

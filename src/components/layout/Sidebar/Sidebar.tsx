@@ -33,7 +33,7 @@ export function Sidebar() {
           <SectionLabel label="Доступные модули" />
           <SidebarModules />
         </div>
-        <SidebarUser />
+        {/* <SidebarUser /> */}
       </div>
     </aside>
   );

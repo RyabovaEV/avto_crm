@@ -10,9 +10,11 @@
     "lint:fix": "next lint --fix",
     "format": "prettier --write .",
     "db:migrate:dev": "dotenv -e .env.development.local -- prisma migrate dev",
-    "db:migrate:prod": "dotenv -e .env.production.local -- prisma migrate deploy",
     "db:studio:dev": "dotenv -e .env.development.local -- prisma studio",
     "db:seed:dev": "dotenv -e .env.development.local -- prisma db seed",
+    "db:migrate:prod": "dotenv -e .env.production.local -- prisma migrate deploy",
+    "db:studio:prod": "dotenv -e .env.production.local -- prisma studio",
+    "db:seed:prod": "dotenv -e .env.production.local -- prisma db seed",
     "export:content": "dotenv -e .env.production.local -- tsx scripts/export-content.ts"
   },
   "dependencies": {

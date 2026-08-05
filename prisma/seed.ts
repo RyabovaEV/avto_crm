@@ -1,8 +1,9 @@
 import 'dotenv/config';
 import { prisma } from '../src/lib/db';
+import { SeasonType } from '@/generated/prisma/browser';
 
 const seasonPeriods: Record<
-  string,
+  SeasonType,
   { startMonth: number; startDay: number; endMonth: number; endDay: number }[]
 > = {
   SPRING: [{ startMonth: 4, startDay: 1, endMonth: 4, endDay: 30 }],
@@ -17,9 +18,9 @@ const seasonPeriods: Record<
 async function main() {
   for (const [type, periods] of Object.entries(seasonPeriods)) {
     const season = await prisma.season.upsert({
-      where: { type: type as keyof typeof seasonPeriods },
+      where: { type: type as SeasonType },
       update: {},
-      create: { type: type as keyof typeof seasonPeriods },
+      create: { type: type as SeasonType },
     });
 
     await prisma.seasonPeriod.deleteMany({ where: { seasonId: season.id } });

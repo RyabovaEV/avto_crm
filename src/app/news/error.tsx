@@ -77,7 +77,7 @@ export default function Error({ error }: { error: Error }) {
             <ArrowRight size={18} /> Обновить страницу
           </button>
           <Link
-            href={'/dashboard/news'}
+            href={'/news'}
             className="inline-flex items-center justify-center gap-2 px-7 py-3.5 text-base font-semibold bg-card hover:bg-muted text-foreground border border-border rounded-lg transition-colors shadow-sm"
           >
             На главную

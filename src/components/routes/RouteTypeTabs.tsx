@@ -19,7 +19,7 @@ export function RouteTypeTabs({ active }: Props) {
       {tabs.map((tab) => (
         <Link
           key={tab.type}
-          href={`/dashboard/schedule?type=${tab.type}`}
+          href={`/schedule?type=${tab.type}`}
           className={cn(
             'px-4 py-2 rounded-lg text-sm font-medium transition-colors',
             active === tab.type
