@@ -28,15 +28,21 @@ export function parseRouteContext(url: string) {
 export const routeFormSchema = zod.object({
   number: zod.string().min(1, 'Укажите номер маршрута'),
   name: zod.string().min(1, 'Укажите название маршрута'),
+  isCircular: zod.boolean().default(false),
 });
 
 export type RouteFormInput = zod.input<typeof routeFormSchema>;
 export type RouteFormData = zod.output<typeof routeFormSchema>;
 
-export const routeWithDeparturesSchema = routeFormSchema.extend({
-  departuresFromStart: zod.array(departureEntrySchema).default([]),
-  departuresFromEnd: zod.array(departureEntrySchema).default([]),
-});
+export const routeWithDeparturesSchema = routeFormSchema
+  .extend({
+    departuresFromStart: zod.array(departureEntrySchema).default([]),
+    departuresFromEnd: zod.array(departureEntrySchema).default([]),
+  })
+  .transform((data) => ({
+    ...data,
+    departuresFromEnd: data.isCircular ? [] : data.departuresFromEnd,
+  }));
 
 export type RouteWithDeparturesInput = zod.input<
   typeof routeWithDeparturesSchema

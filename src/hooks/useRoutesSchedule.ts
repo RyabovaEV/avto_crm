@@ -15,6 +15,7 @@ export type RouteWithDepartures = {
   id: number;
   number: string;
   name: string;
+  isCircular: boolean;
   departures: {
     id: number;
     direction: 'FROM_START' | 'FROM_END';
@@ -27,6 +28,7 @@ export type RouteWithDepartures = {
 export type FormState = {
   number: string;
   name: string;
+  isCircular: boolean;
   departuresFromStart: DepartureEntryState[];
   departuresFromEnd: DepartureEntryState[];
 };
@@ -45,6 +47,7 @@ const emptyEntry: DepartureEntryState = {
 const emptyForm: FormState = {
   number: '',
   name: '',
+  isCircular: false,
   departuresFromStart: [],
   departuresFromEnd: [],
 };
@@ -62,6 +65,7 @@ function toFormInput(route: RouteWithDepartures): FormState {
   return {
     number: route.number,
     name: route.name,
+    isCircular: route.isCircular,
     departuresFromStart: byDirection('FROM_START'),
     departuresFromEnd: byDirection('FROM_END'),
   };
@@ -100,7 +104,7 @@ export function useRoutesSchedule(
     setSubmitError(null);
   }
 
-  function updateField<K extends 'number' | 'name'>(
+  function updateField<K extends 'number' | 'name' | 'isCircular'>(
     key: K,
     value: FormState[K]
   ) {
@@ -199,6 +203,18 @@ export function useRoutesSchedule(
     }
   }
 
+  function toggleCircular(value: boolean) {
+    if (state.mode === 'idle') return;
+    setState({
+      ...state,
+      form: {
+        ...state.form,
+        isCircular: value,
+        departuresFromEnd: value ? [] : state.form.departuresFromEnd,
+      },
+    });
+  }
+
   return {
     routes,
     state,
@@ -211,6 +227,7 @@ export function useRoutesSchedule(
     startEdit,
     cancel,
     updateField,
+    toggleCircular,
     addDeparture,
     removeDeparture,
     updateDeparture,

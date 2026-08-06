@@ -1,4 +1,4 @@
-import { Input, Button } from '@/components/ui';
+import { Input, Button, Checkbox } from '@/components/ui';
 import { X, Check } from 'lucide-react';
 import { DepartureListEditor } from './DepartureListEditor';
 import { DepartureEntryInput } from '@/lib/validation/routeDeparture';
@@ -17,6 +17,7 @@ type Props = {
     key: K,
     value: FormState[K]
   ) => void;
+  onToggleCircular: (value: boolean) => void;
   onAddDeparture: (direction: Direction) => void;
   onRemoveDeparture: (direction: Direction, index: number) => void;
   onChangeDeparture: (
@@ -35,12 +36,15 @@ export function RouteFormCard({
   submitError,
   isSaving,
   onFieldChange,
+  onToggleCircular,
   onAddDeparture,
   onRemoveDeparture,
   onChangeDeparture,
   onSave,
   onCancel,
 }: Props) {
+  const hasEndDepartures = form.departuresFromEnd.length > 0;
+
   return (
     <form
       onSubmit={(e) => {
@@ -80,9 +84,30 @@ export function RouteFormCard({
         />
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-5">
+      <div className="flex flex-col gap-1">
+        <Checkbox
+          label="Круговой маршрут"
+          checked={form.isCircular}
+          onChange={onToggleCircular}
+          disabled={isSaving || hasEndDepartures}
+        />
+        {hasEndDepartures && (
+          <p className="text-xs text-muted-foreground pl-6">
+            Чтобы сделать маршрут круговым, удалите рейсы в колонке «Отправление
+            (кон. пункт)»
+          </p>
+        )}
+      </div>
+
+      <div
+        className={
+          form.isCircular
+            ? 'grid grid-cols-1 gap-5'
+            : 'grid grid-cols-1 xl:grid-cols-2 gap-5'
+        }
+      >
         <DepartureListEditor
-          title="Отправление (нач. пункт)"
+          title={form.isCircular ? 'Рейсы' : 'Отправление (нач. пункт)'}
           entries={form.departuresFromStart}
           errors={fieldErrors.departuresFromStart}
           disabled={isSaving}
@@ -92,17 +117,19 @@ export function RouteFormCard({
             onChangeDeparture('departuresFromStart', index, patch)
           }
         />
-        <DepartureListEditor
-          title="Отправление (кон. пункт)"
-          entries={form.departuresFromEnd}
-          errors={fieldErrors.departuresFromEnd}
-          disabled={isSaving}
-          onAdd={() => onAddDeparture('departuresFromEnd')}
-          onRemove={(index) => onRemoveDeparture('departuresFromEnd', index)}
-          onChange={(index, patch) =>
-            onChangeDeparture('departuresFromEnd', index, patch)
-          }
-        />
+        {!form.isCircular && (
+          <DepartureListEditor
+            title="Отправление (кон. пункт)"
+            entries={form.departuresFromEnd}
+            errors={fieldErrors.departuresFromEnd}
+            disabled={isSaving}
+            onAdd={() => onAddDeparture('departuresFromEnd')}
+            onRemove={(index) => onRemoveDeparture('departuresFromEnd', index)}
+            onChange={(index, patch) =>
+              onChangeDeparture('departuresFromEnd', index, patch)
+            }
+          />
+        )}
       </div>
 
       {submitError && <p className="text-sm text-destructive">{submitError}</p>}

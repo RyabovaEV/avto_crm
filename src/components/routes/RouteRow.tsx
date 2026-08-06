@@ -63,11 +63,23 @@ export function RouteRow({
       onDelete={onDelete}
     >
       <div className="flex flex-col gap-2 w-full">
-        <span className="text-sm font-semibold text-foreground">
-          {route.name}
-        </span>
-        <DepartureGroup label="Отправление" departures={fromStart} />
-        <DepartureGroup label="Обратно" departures={fromEnd} />
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-semibold text-foreground">
+            {route.name}
+          </span>
+          {route.isCircular && (
+            <span className="px-2 py-0.5 rounded-md bg-primary/10 text-primary text-xs font-medium">
+              КРУГОВОЙ
+            </span>
+          )}
+        </div>
+        <DepartureGroup
+          label={route.isCircular ? 'Рейсы' : 'Отправление'}
+          departures={fromStart}
+        />
+        {!route.isCircular && (
+          <DepartureGroup label="Обратно" departures={fromEnd} />
+        )}
       </div>
     </EntityRow>
   );

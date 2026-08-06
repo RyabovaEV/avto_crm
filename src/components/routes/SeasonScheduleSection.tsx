@@ -42,6 +42,7 @@ export function SeasonScheduleSection({
     startEdit,
     cancel,
     updateField,
+    toggleCircular,
     addDeparture,
     removeDeparture,
     updateDeparture,
@@ -74,6 +75,7 @@ export function SeasonScheduleSection({
             submitError={submitError}
             isSaving={isSaving}
             onFieldChange={updateField}
+            onToggleCircular={toggleCircular}
             onAddDeparture={addDeparture}
             onRemoveDeparture={removeDeparture}
             onChangeDeparture={updateDeparture}
@@ -96,6 +98,7 @@ export function SeasonScheduleSection({
               submitError={submitError}
               isSaving={isSaving}
               onFieldChange={updateField}
+              onToggleCircular={toggleCircular}
               onAddDeparture={addDeparture}
               onRemoveDeparture={removeDeparture}
               onChangeDeparture={updateDeparture}

@@ -114,6 +114,7 @@ model Route {
   number String
   name String
   type RouteType
+  isCircular Boolean          @default(false)
   season Season @relation(fields: [seasonId], references: [id])
   seasonId Int
   departures RouteDeparture[]
