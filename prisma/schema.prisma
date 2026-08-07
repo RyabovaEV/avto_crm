@@ -120,8 +120,6 @@ model Route {
   departures RouteDeparture[]
   createdAt  DateTime         @default(now())
   updatedAt  DateTime         @updatedAt
-
-  @@unique([seasonId, type, number])
 }
 
 model RouteDeparture {

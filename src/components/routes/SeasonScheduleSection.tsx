@@ -1,6 +1,5 @@
 'use client';
 
-import { Section } from '@/components/ui';
 import { Plus } from 'lucide-react';
 import { RouteType, SeasonPeriod, SeasonType } from '@/generated/prisma/client';
 import {
@@ -9,7 +8,7 @@ import {
 } from '@/hooks/useRoutesSchedule';
 import { RouteFormCard } from './RouteFormCard';
 import { RouteRow } from './RouteRow';
-import { formatSeasonPeriods, isCurrentSeason } from '@/lib/seasonPeriod';
+import { isCurrentSeason } from '@/lib/seasonPeriod';
 import { Accordion } from '../ui/Accordion';
 import { SEASON_THEME } from '@/config/SeasonTheme';
 
