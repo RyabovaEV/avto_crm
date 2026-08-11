@@ -8,9 +8,10 @@ export async function getSeasonsWithRoutes(type: RouteType) {
       periods: true,
       routes: {
         where: { type },
-        orderBy: { number: 'asc' },
+        orderBy: { order: 'asc' },
         include: {
           departures: { orderBy: { time: 'asc' } },
+          comments: true,
         },
       },
     },

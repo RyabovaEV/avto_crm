@@ -1,13 +1,43 @@
 import { EntityRow } from '@/components/ui';
-import { RouteWithDepartures } from '@/hooks/useRoutesSchedule';
+import {
+  RouteWithDepartures,
+  CommentState,
+  CommentFormState,
+} from '@/hooks/useRoutesSchedule';
 import { formatDaysOfWeek } from '@/lib/scheduleDays';
+import { ChevronDown, ChevronUp } from 'lucide-react';
+import { RouteComments } from './RouteComments';
+import { RouteCommentErrors } from '@/lib/validation/routeComment';
+import { RouteCommentForm } from './RouteCommentForm';
 
 type Props = {
   route: RouteWithDepartures;
   isDisabled: boolean;
   isDeleting: boolean;
+  isFirst: boolean;
+  isLast: boolean;
   onEdit: () => void;
   onDelete: () => void;
+  onMoveUp: () => void;
+  onMoveDown: () => void;
+
+  commentState: CommentState;
+  commentFieldErrors: RouteCommentErrors;
+  commentSubmitError: string | null;
+  isCommentSaving: boolean;
+  deletingCommentId: number | null;
+  onCommentFieldChange: <K extends keyof CommentFormState>(
+    key: K,
+    value: CommentFormState[K]
+  ) => void;
+  onCommentSave: () => void;
+  onCommentCancel: () => void;
+  onCommentEditStart: (comment: {
+    id: number;
+    text: string;
+    times: string[];
+  }) => void;
+  onCommentDelete: (commentId: number) => void;
 };
 
 function DepartureGroup({
@@ -46,13 +76,30 @@ export function RouteRow({
   route,
   isDisabled,
   isDeleting,
+  isFirst,
+  isLast,
+  onMoveUp,
+  onMoveDown,
   onEdit,
   onDelete,
+  commentState,
+  commentFieldErrors,
+  commentSubmitError,
+  isCommentSaving,
+  deletingCommentId,
+  onCommentFieldChange,
+  onCommentSave,
+  onCommentCancel,
+  onCommentEditStart,
+  onCommentDelete,
 }: Props) {
   const fromStart = route.departures.filter(
     (d) => d.direction === 'FROM_START'
   );
   const fromEnd = route.departures.filter((d) => d.direction === 'FROM_END');
+
+  const editingCommentId =
+    commentState.mode === 'editing' ? commentState.id : null;
 
   return (
     <EntityRow
@@ -61,6 +108,26 @@ export function RouteRow({
       isDeleting={isDeleting}
       onEdit={onEdit}
       onDelete={onDelete}
+      actions={
+        <div className="flex flex-col gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
+          <button
+            type="button"
+            onClick={onMoveUp}
+            disabled={isDisabled || isFirst}
+            className="p-0.5 rounded text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors disabled:opacity-30 disabled:pointer-events-none"
+          >
+            <ChevronUp size={13} />
+          </button>
+          <button
+            type="button"
+            onClick={onMoveDown}
+            disabled={isDisabled || isLast}
+            className="p-0.5 rounded text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors disabled:opacity-30 disabled:pointer-events-none"
+          >
+            <ChevronDown size={13} />
+          </button>
+        </div>
+      }
     >
       <div className="flex flex-col gap-2 w-full">
         <div className="flex items-center gap-2">
@@ -80,6 +147,32 @@ export function RouteRow({
         {!route.isCircular && (
           <DepartureGroup label="Обратно" departures={fromEnd} />
         )}
+
+        <RouteComments
+          comments={route.comments}
+          isDisabled={isDisabled}
+          deletingCommentId={deletingCommentId}
+          editingCommentId={editingCommentId}
+          onEdit={(comment) => onCommentEditStart(comment)}
+          onDelete={(commentId) => onCommentDelete(commentId)}
+          renderEditForm={() => (
+            <RouteCommentForm
+              mode="editing"
+              routes={[route]}
+              form={
+                commentState.mode === 'editing'
+                  ? commentState.form
+                  : { routeId: route.id, text: '', times: [] }
+              }
+              fieldErrors={commentFieldErrors}
+              submitError={commentSubmitError}
+              isSaving={isCommentSaving}
+              onChange={onCommentFieldChange}
+              onSave={onCommentSave}
+              onCancel={onCommentCancel}
+            />
+          )}
+        />
       </div>
     </EntityRow>
   );

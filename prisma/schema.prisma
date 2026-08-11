@@ -115,11 +115,21 @@ model Route {
   name String
   type RouteType
   isCircular Boolean          @default(false)
+   order      Int              @default(0)
   season Season @relation(fields: [seasonId], references: [id])
   seasonId Int
   departures RouteDeparture[]
+    comments   RouteComment[]
   createdAt  DateTime         @default(now())
   updatedAt  DateTime         @updatedAt
+}
+
+model RouteComment {
+  id      Int    @id @default(autoincrement())
+  route   Route  @relation(fields: [routeId], references: [id], onDelete: Cascade)
+  routeId Int
+  text    String
+  times   String[]
 }
 
 model RouteDeparture {

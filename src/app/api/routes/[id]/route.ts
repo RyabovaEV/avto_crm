@@ -1,5 +1,4 @@
 import { prisma } from '@/lib/db';
-import { Prisma } from '@/generated/prisma/client';
 import { NextResponse } from 'next/server';
 import { parseRequestBody, withApiErrorHandling } from '@/lib/api';
 import {

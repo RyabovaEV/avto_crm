@@ -5,6 +5,17 @@ import { ReactNode, useState } from 'react';
 import { cn } from '@/lib/cn';
 import { Button } from './Button';
 
+type ButtonMode = 'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive';
+
+type AccordionAction = {
+  label: string;
+  icon?: LucideIcon;
+  onClick: () => void;
+  disabled?: boolean;
+  mode?: ButtonMode;
+  align?: 'start' | 'end';
+};
+
 type AccordionProps = {
   icon: LucideIcon;
   border: string;
@@ -14,10 +25,7 @@ type AccordionProps = {
   count?: number;
   subtitle?: string;
   defaultOpen?: boolean;
-  buttonLabel?: string;
-  buttonIcon?: LucideIcon;
-  onButtonClick?: () => void;
-  buttonDisabled?: boolean;
+  actions?: AccordionAction[];
   children: ReactNode;
 };
 
@@ -30,14 +38,14 @@ export function Accordion({
   count,
   subtitle,
   defaultOpen = false,
-  buttonLabel,
-  buttonIcon,
-  onButtonClick,
-  buttonDisabled,
+  actions,
   children,
 }: AccordionProps) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
   const toggle = () => setIsOpen((prev) => !prev);
+
+  const startActions = actions?.filter((a) => a.align === 'start') ?? [];
+  const endActions = actions?.filter((a) => a.align !== 'start') ?? [];
 
   return (
     <section
@@ -97,17 +105,44 @@ export function Accordion({
       >
         <div className="overflow-hidden">
           <div className="px-6 pt-4 pb-6 space-y-3 border-t border-border">
-            {buttonLabel && (
-              <div className="flex justify-end">
-                <Button
-                  mode="outline"
-                  icon={buttonIcon}
-                  onClick={onButtonClick}
-                  disabled={buttonDisabled}
-                  className="px-4 py-1.5 text-xs"
-                >
-                  {buttonLabel}
-                </Button>
+            {(startActions.length > 0 || endActions.length > 0) && (
+              <div className="flex items-center justify-between gap-2 flex-wrap">
+                <div className="flex items-center gap-2 flex-wrap">
+                  {startActions.map((action) => (
+                    <Button
+                      key={action.label}
+                      mode={action.mode ?? 'outline'}
+                      icon={action.icon}
+                      onClick={action.onClick}
+                      disabled={action.disabled}
+                      className={cn(
+                        action.mode === 'ghost'
+                          ? 'text-primary hover:text-primary hover:bg-transparent hover:underline'
+                          : 'px-4 py-1.5 text-xs'
+                      )}
+                    >
+                      {action.label}
+                    </Button>
+                  ))}
+                </div>
+                <div className="flex items-center gap-2 flex-wrap">
+                  {endActions.map((action) => (
+                    <Button
+                      key={action.label}
+                      mode={action.mode ?? 'outline'}
+                      icon={action.icon}
+                      onClick={action.onClick}
+                      disabled={action.disabled}
+                      className={cn(
+                        action.mode === 'ghost'
+                          ? 'text-primary hover:text-primary hover:bg-transparent hover:underline text-xs weight-xs'
+                          : 'px-4 py-1.5 text-xs'
+                      )}
+                    >
+                      {action.label}
+                    </Button>
+                  ))}
+                </div>
               </div>
             )}
             {children}

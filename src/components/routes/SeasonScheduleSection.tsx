@@ -1,6 +1,6 @@
 'use client';
 
-import { Plus } from 'lucide-react';
+import { MessageSquarePlus, Plus } from 'lucide-react';
 import { RouteType, SeasonPeriod, SeasonType } from '@/generated/prisma/client';
 import {
   useRoutesSchedule,
@@ -11,6 +11,8 @@ import { RouteRow } from './RouteRow';
 import { isCurrentSeason } from '@/lib/seasonPeriod';
 import { Accordion } from '../ui/Accordion';
 import { SEASON_THEME } from '@/config/SeasonTheme';
+import { RouteCommentForm } from './RouteCommentForm';
+import { Button } from '../ui';
 
 type Props = {
   seasonId: number;
@@ -47,9 +49,24 @@ export function SeasonScheduleSection({
     updateDeparture,
     handleSave,
     handleDelete,
+    handleReorder,
+    commentState,
+    commentFieldErrors,
+    commentSubmitError,
+    isCommentSaving,
+    deletingCommentId,
+    startCreateComment,
+    updateCommentField,
+    handleSaveComment,
+    cancelComment,
+    startEditComment,
+    handleDeleteComment,
   } = useRoutesSchedule(seasonId, routeType, initialData);
 
   const theme = SEASON_THEME[seasonType];
+  const isAddingComment = commentState.mode === 'creating';
+  const isEditingComment = commentState.mode === 'editing';
+  const isAnyFormOpen = isFormOpen || isAddingComment || isEditingComment;
 
   return (
     <Accordion
@@ -60,12 +77,38 @@ export function SeasonScheduleSection({
       title={`${seasonTitle} расписание`}
       count={routes.length}
       defaultOpen={isCurrentSeason(periods)}
-      buttonLabel="Добавить маршрут"
-      buttonIcon={Plus}
-      onButtonClick={startCreate}
-      buttonDisabled={isFormOpen}
+      actions={[
+        {
+          label: 'Добавить примечание',
+          icon: MessageSquarePlus,
+          onClick: startCreateComment,
+          disabled: isAnyFormOpen,
+          mode: 'ghost',
+          align: 'end',
+        },
+        {
+          label: 'Добавить маршрут',
+          icon: Plus,
+          onClick: startCreate,
+          disabled: isAnyFormOpen,
+        },
+      ]}
     >
       <div className="flex flex-col gap-3">
+        {isAddingComment && (
+          <RouteCommentForm
+            mode="creating"
+            routes={routes}
+            form={commentState.form}
+            fieldErrors={commentFieldErrors}
+            submitError={commentSubmitError}
+            isSaving={isCommentSaving}
+            onChange={updateCommentField}
+            onSave={handleSaveComment}
+            onCancel={cancelComment}
+          />
+        )}
+
         {state.mode === 'creating' && (
           <RouteFormCard
             title="Новый маршрут"
@@ -87,7 +130,7 @@ export function SeasonScheduleSection({
           <p className="text-sm text-muted-foreground">Маршруты не добавлены</p>
         )}
 
-        {routes.map((route) =>
+        {routes.map((route, index) =>
           state.mode === 'editing' && state.id === route.id ? (
             <RouteFormCard
               key={route.id}
@@ -108,10 +151,28 @@ export function SeasonScheduleSection({
             <RouteRow
               key={route.id}
               route={route}
-              isDisabled={isFormOpen || deletingId !== null}
+              isDisabled={isAnyFormOpen || deletingId !== null}
               isDeleting={deletingId === route.id}
               onEdit={() => startEdit(route)}
+              isFirst={index === 0}
+              isLast={index === routes.length - 1}
               onDelete={() => handleDelete(route.id)}
+              onMoveUp={() => handleReorder(route.id, 'up')}
+              onMoveDown={() => handleReorder(route.id, 'down')}
+              commentState={commentState}
+              commentFieldErrors={commentFieldErrors}
+              commentSubmitError={commentSubmitError}
+              isCommentSaving={isCommentSaving}
+              deletingCommentId={deletingCommentId}
+              onCommentFieldChange={updateCommentField}
+              onCommentSave={handleSaveComment}
+              onCommentCancel={cancelComment}
+              onCommentEditStart={(comment) =>
+                startEditComment(route.id, comment)
+              }
+              onCommentDelete={(commentId) =>
+                handleDeleteComment(route.id, commentId)
+              }
             />
           )
         )}

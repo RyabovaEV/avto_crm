@@ -48,43 +48,32 @@ export const POST = withApiErrorHandling(
     const { departuresFromStart, departuresFromEnd, ...routeData } =
       parsed.data;
 
-    try {
-      const route = await prisma.route.create({
-        data: {
-          ...routeData,
-          ...context.data, // type + seasonId — только из URL, не из тела запроса
-          departures: {
-            create: [
-              ...departuresFromStart.map((d) => ({
-                ...d,
-                direction: 'FROM_START' as const,
-              })),
-              ...departuresFromEnd.map((d) => ({
-                ...d,
-                direction: 'FROM_END' as const,
-              })),
-            ],
-          },
-        },
-        include: { departures: { orderBy: { time: 'asc' } } },
-      });
+    const maxOrder = await prisma.route.aggregate({
+      where: context.data,
+      _max: { order: true },
+    });
 
-      return NextResponse.json(route);
-    } catch (error) {
-      if (
-        error instanceof Prisma.PrismaClientKnownRequestError &&
-        error.code === 'P2002'
-      ) {
-        return NextResponse.json(
-          {
-            fieldErrors: {
-              number: 'Маршрут с таким номером уже есть в этом сезоне',
-            },
-          },
-          { status: 400 }
-        );
-      }
-      throw error;
-    }
+    const route = await prisma.route.create({
+      data: {
+        ...routeData,
+        ...context.data,
+        order: (maxOrder._max.order || 0) + 1,
+        departures: {
+          create: [
+            ...departuresFromStart.map((d) => ({
+              ...d,
+              direction: 'FROM_START' as const,
+            })),
+            ...departuresFromEnd.map((d) => ({
+              ...d,
+              direction: 'FROM_END' as const,
+            })),
+          ],
+        },
+      },
+      include: { departures: { orderBy: { time: 'asc' } } },
+    });
+
+    return NextResponse.json(route);
   }
 );
