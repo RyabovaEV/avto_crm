@@ -1,7 +1,7 @@
 'use client';
 
 import { Plus } from 'lucide-react';
-import { Section } from '../ui';
+import { ExportButton, Section } from '../ui';
 import { News } from '@/generated/prisma/client';
 import { newsSchema } from '@/lib/validation/news';
 import { useEditableList } from '@/hooks/useEditableList';
@@ -91,6 +91,9 @@ export default function NewsSection({ initialData }: Props) {
             />
           )
         )}
+      </div>
+      <div className="flex justify-end">
+        <ExportButton endpoint="/api/news/export" filename="news.ts" />
       </div>
     </Section>
   );

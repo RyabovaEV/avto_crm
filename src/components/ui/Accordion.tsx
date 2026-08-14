@@ -116,9 +116,8 @@ export function Accordion({
                       onClick={action.onClick}
                       disabled={action.disabled}
                       className={cn(
-                        action.mode === 'ghost'
-                          ? 'text-primary hover:text-primary hover:bg-transparent hover:underline'
-                          : 'px-4 py-1.5 text-xs'
+                        'text-xs',
+                        action.mode !== 'ghost' && 'px-4 py-1.5'
                       )}
                     >
                       {action.label}
@@ -134,9 +133,8 @@ export function Accordion({
                       onClick={action.onClick}
                       disabled={action.disabled}
                       className={cn(
-                        action.mode === 'ghost'
-                          ? 'text-primary hover:text-primary hover:bg-transparent hover:underline text-xs weight-xs'
-                          : 'px-4 py-1.5 text-xs'
+                        'text-xs',
+                        action.mode !== 'ghost' && 'px-4 py-1.5'
                       )}
                     >
                       {action.label}

@@ -1,6 +1,6 @@
 'use client';
 
-import { Form, Input } from '../ui';
+import { ExportButton, Form, Input } from '../ui';
 import { CompanyInfo } from '@/generated/prisma/client';
 import { useSettingsForm } from '@/hooks/useSettingsForm';
 import { organizationSchema } from '@/lib/validation/organization';
@@ -37,6 +37,12 @@ export function OrganizationForm({ initialData }: Props) {
       isSaving={isSaving}
       error={error}
       success={success}
+      secondaryAction={
+        <ExportButton
+          endpoint="/api/organization/export"
+          filename="organization.ts"
+        />
+      }
     >
       <Input
         label="Название организации"

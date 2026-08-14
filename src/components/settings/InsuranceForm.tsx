@@ -1,7 +1,7 @@
 'use client';
 
 import { CompanyInsurance } from '@/generated/prisma/client';
-import { Form, Input } from '../ui';
+import { ExportButton, Form, Input } from '../ui';
 import { useSettingsForm } from '@/hooks/useSettingsForm';
 import { insuranceSchema } from '@/lib/validation/insurance';
 
@@ -27,7 +27,17 @@ export function InsuranceForm({ initialData }: Props) {
     );
 
   return (
-    <Form onSubmit={handleSubmit} isSaving={isSaving} success={success}>
+    <Form
+      onSubmit={handleSubmit}
+      isSaving={isSaving}
+      success={success}
+      secondaryAction={
+        <ExportButton
+          endpoint="/api/insurance/export"
+          filename="insurance.ts"
+        />
+      }
+    >
       <Input
         label="Страховая компания"
         value={form.insurer}

@@ -29,13 +29,7 @@ export function DepartureListEditor({
     <div className="flex flex-col gap-3">
       <div className="flex items-center justify-between">
         <span className="text-sm font-semibold text-foreground">{title}</span>
-        <Button
-          mode="ghost"
-          icon={Plus}
-          onClick={onAdd}
-          disabled={disabled}
-          className="text-primary hover:text-primary hover:bg-transparent hover:underline"
-        >
+        <Button mode="ghost" icon={Plus} onClick={onAdd} disabled={disabled}>
           Добавить рейс
         </Button>
       </div>

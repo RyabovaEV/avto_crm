@@ -12,7 +12,7 @@ import { isCurrentSeason } from '@/lib/seasonPeriod';
 import { Accordion } from '../ui/Accordion';
 import { SEASON_THEME } from '@/config/SeasonTheme';
 import { RouteCommentForm } from './RouteCommentForm';
-import { Button } from '../ui';
+import { Button, ExportButton } from '../ui';
 
 type Props = {
   seasonId: number;
@@ -67,6 +67,9 @@ export function SeasonScheduleSection({
   const isAddingComment = commentState.mode === 'creating';
   const isEditingComment = commentState.mode === 'editing';
   const isAnyFormOpen = isFormOpen || isAddingComment || isEditingComment;
+
+  const exportQuery = `seasonId=${seasonId}&type=${routeType}`;
+  const exportFilename = `routes-${seasonType.toLowerCase()}-${routeType.toLowerCase()}.ts`;
 
   return (
     <Accordion
@@ -176,6 +179,13 @@ export function SeasonScheduleSection({
             />
           )
         )}
+      </div>
+
+      <div className="flex justify-end">
+        <ExportButton
+          endpoint={`/api/routes/export?${exportQuery}`}
+          filename={exportFilename}
+        />
       </div>
     </Accordion>
   );

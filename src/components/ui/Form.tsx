@@ -1,10 +1,13 @@
+import { ReactNode } from 'react';
 import { Button } from './Button';
 import { Check } from 'lucide-react';
+import { cn } from '@/lib/cn';
 
 type FormProps = React.FormHTMLAttributes<HTMLFormElement> & {
   isSaving?: boolean;
   error?: string | null;
   success?: boolean;
+  secondaryAction?: ReactNode;
 };
 
 export function Form({
@@ -12,6 +15,7 @@ export function Form({
   isSaving,
   error,
   success,
+  secondaryAction,
   ...props
 }: FormProps) {
   return (
@@ -20,17 +24,25 @@ export function Form({
         {children}
         {error && <p className="text-sm text-destructive">{error}</p>}
       </div>
-      <Button className="self-end" type="submit" disabled={isSaving}>
-        {isSaving ? (
-          'Сохранение...'
-        ) : success ? (
-          <>
-            <Check size={16} /> Сохранено!
-          </>
-        ) : (
-          'Сохранить'
+      <div
+        className={cn(
+          'flex items-center',
+          secondaryAction ? 'justify-between' : 'justify-end'
         )}
-      </Button>
+      >
+        {secondaryAction}
+        <Button className="self-end" type="submit" disabled={isSaving}>
+          {isSaving ? (
+            'Сохранение...'
+          ) : success ? (
+            <>
+              <Check size={16} /> Сохранено!
+            </>
+          ) : (
+            'Сохранить'
+          )}
+        </Button>
+      </div>
     </form>
   );
 }

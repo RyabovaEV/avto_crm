@@ -1,7 +1,7 @@
 'use client';
 
 import { CompanyPhone } from '@/generated/prisma/client';
-import { Section } from '../ui';
+import { ExportButton, Section } from '../ui';
 import { Plus } from 'lucide-react';
 import { phoneSchema, PhoneFormInput } from '@/lib/validation/phone';
 import { useEditableList } from '@/hooks/useEditableList';
@@ -91,6 +91,9 @@ export function PhonesSection({ initialData }: Props) {
             />
           )
         )}
+      </div>
+      <div className="flex justify-end">
+        <ExportButton endpoint="/api/phones/export" filename="phones.ts" />
       </div>
     </Section>
   );
