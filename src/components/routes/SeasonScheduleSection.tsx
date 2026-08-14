@@ -12,7 +12,7 @@ import { isCurrentSeason } from '@/lib/seasonPeriod';
 import { Accordion } from '../ui/Accordion';
 import { SEASON_THEME } from '@/config/SeasonTheme';
 import { RouteCommentForm } from './RouteCommentForm';
-import { Button, ExportButton } from '../ui';
+import { ExportButton } from '../ui';
 
 type Props = {
   seasonId: number;
