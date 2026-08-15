@@ -1,7 +1,6 @@
 import { SidebarHeader } from './SidebarHeader';
 import { SidebarModules } from './SidebarModules';
 import { SidebarNav } from './SidebarNav';
-import { SidebarUser } from './SidebarUser';
 import { SectionLabel } from './ui/SectionLabel';
 
 export function Sidebar() {
@@ -33,7 +32,6 @@ export function Sidebar() {
           <SectionLabel label="Доступные модули" />
           <SidebarModules />
         </div>
-        {/* <SidebarUser /> */}
       </div>
     </aside>
   );

@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { NAV_ITEM } from '@/config/navigation';
 import { usePathname } from 'next/navigation';
-import clsx from 'clsx';
+import { cn } from '@/lib/cn';
 
 export function SidebarNav() {
   const pathname = usePathname();
@@ -14,7 +14,7 @@ export function SidebarNav() {
           <Link
             key={link.href}
             href={link.href}
-            className={clsx(
+            className={cn(
               'w-full flex items-center gap-3 px-3 py-3 rounded-xl text-sm transition-all duration-150 mb-1 group border',
               isActive
                 ? 'bg-blue-400/20 border-blue-400/30 text-white'

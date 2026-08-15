@@ -9,10 +9,9 @@ import {
 import { RouteFormCard } from './RouteFormCard';
 import { RouteRow } from './RouteRow';
 import { isCurrentSeason } from '@/lib/seasonPeriod';
-import { Accordion } from '../ui/Accordion';
 import { SEASON_THEME } from '@/config/SeasonTheme';
 import { RouteCommentForm } from './RouteCommentForm';
-import { ExportButton } from '../ui';
+import { ExportButton, Accordion } from '../ui';
 
 type Props = {
   seasonId: number;

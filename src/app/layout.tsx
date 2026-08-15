@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { inter } from '@/lib/fonts';
+import { roboto } from '@/lib/fonts';
 import './globals.css';
 import { Providers } from './providers';
 import { Sidebar } from '@/components/layout/Sidebar/Sidebar';
@@ -15,7 +15,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru" suppressHydrationWarning className={inter.variable}>
+    <html lang="ru" suppressHydrationWarning className={roboto.variable}>
       <body>
         <Providers>
           <div className="h-screen flex overflow-hidden">

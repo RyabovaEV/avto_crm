@@ -1,36 +1,245 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Avto CRM
 
-## Getting Started
+Система управления маршрутами и расписанием для автотранспортной компании. CRM приложение для управления новостями, расписанием маршрутов и информацией о компании.
 
-First, run the development server:
+## 🚀 Возможности
+
+- **Управление компанией** - информация о компании, контактные телефоны, реквизиты страховки
+- **Управление маршрутами** - создание и редактирование маршрутов с расписанием отправлений
+- **Сезонное расписание** - разные маршруты для разных сезонов (лето, осень, зима, весна)
+- **Новости** - публикация новостей и объявлений для клиентов
+- **Комментарии к маршрутам** - добавление специальных примечаний к отправлениям
+- **Тёмная тема** - поддержка светлой и тёмной темы оформления
+
+## 📋 Требования
+
+- Node.js 18+
+- PostgreSQL 12+
+- npm или yarn
+
+## 🛠️ Технологический стек
+
+- **Frontend**: Next.js 16, React 19, TypeScript
+- **Backend**: Next.js API Routes, Prisma ORM
+- **База данных**: PostgreSQL
+- **Стили**: Tailwind CSS 4
+- **UI компоненты**: Lucide React icons
+- **Валидация**: Zod
+- **Редактор**: MD Editor (для новостей)
+- **Темы**: next-themes
+
+## 📦 Установка
+
+### 1. Клонирование репозитория
+
+```bash
+git clone <repository-url>
+cd avto_crm
+```
+
+### 2. Установка зависимостей
+
+```bash
+npm install
+```
+
+### 3. Настройка переменных окружения
+
+Создайте файлы `.env.development.local` и `.env.production.local`:
+
+```
+DATABASE_URL="postgresql://user:password@localhost:5432/avto_crm"
+```
+
+### 4. Миграция базы данных
+
+```bash
+npm run db:migrate:dev
+```
+
+### 5. Генерация Prisma клиента
+
+```bash
+npm run db:generate:dev
+```
+
+### 6. Заполнение начальных данных (опционально)
+
+```bash
+npm run db:seed:dev
+```
+
+## 🏃 Запуск
+
+### Режим разработки
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Откройте [http://localhost:3000](http://localhost:3000) в браузере.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Production сборка и запуск
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+## 📚 Доступные команды
 
-To learn more about Next.js, take a look at the following resources:
+| Команда                       | Описание                          |
+| ----------------------------- | --------------------------------- |
+| `npm run dev`                 | Запуск сервера разработки         |
+| `npm run build`               | Сборка проекта для production     |
+| `npm start`                   | Запуск production сервера         |
+| `npm run lint`                | Проверка кода                     |
+| `npm run lint:fix`            | Исправление lint ошибок           |
+| `npm run format`              | Форматирование кода Prettier      |
+| `npm run db:migrate:dev`      | Запуск миграций в dev             |
+| `npm run db:migrate:prod`     | Запуск миграций в production      |
+| `npm run db:studio:dev`       | Открытие Prisma Studio (dev)      |
+| `npm run db:studio:prod`      | Открытие Prisma Studio (prod)     |
+| `npm run db:seed:dev`         | Заполнение начальных данных (dev) |
+| `npm run db:sync:prod-to-dev` | Синхронизация БД prod → dev       |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📁 Структура проекта
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+src/
+├── app/                    # Next.js app directory
+│   ├── api/               # API routes
+│   │   ├── insurance/
+│   │   ├── news/
+│   │   ├── organization/
+│   │   ├── phones/
+│   │   ├── route-comments/
+│   │   └── routes/
+│   ├── news/              # Страница новостей
+│   ├── schedule/          # Страница расписания
+│   ├── settings/          # Страница настроек
+│   └── layout.tsx
+├── components/            # React компоненты
+│   ├── layout/           # Компоненты макета (Header, Sidebar)
+│   ├── news/             # Компоненты новостей
+│   ├── phones/           # Компоненты телефонов
+│   ├── routes/           # Компоненты маршрутов
+│   ├── settings/         # Компоненты настроек
+│   └── ui/               # Переиспользуемые UI компоненты
+├── config/               # Конфигурация
+│   ├── navigation.ts     # Навигация приложения
+│   └── SeasonTheme.ts    # Темы сезонов
+├── hooks/                # Custom React hooks
+│   ├── useAsyncAction.ts
+│   ├── useEditableList.ts
+│   ├── useRoutesSchedule.ts
+│   └── useSettingsForm.ts
+├── lib/                  # Утилиты и вспомогательные функции
+│   ├── api.ts
+│   ├── db.ts
+│   ├── validation/       # Функции валидации
+│   └── export/           # Функции экспорта
+└── generated/            # Сгенерированные файлы Prisma
 
-## Deploy on Vercel
+prisma/
+├── schema.prisma         # Схема БД
+├── seed.ts              # Скрипт заполнения данных
+└── migrations/          # Миграции БД
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📊 Модель данных
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Основные сущности
+
+- **CompanyInfo** - Информация о компании
+- **CompanyPhone** - Телефоны компании
+- **CompanyInsurance** - Информация о страховке
+- **Route** - Маршруты
+- **RouteDeparture** - Отправления маршрутов
+- **RouteComment** - Комментарии к отправлениям
+- **Season** - Сезоны (лето, осень, зима, весна)
+- **SeasonPeriod** - Периоды сезонов
+- **News** - Новости
+
+## 🐳 Docker
+
+Проект поддерживает Docker. Для запуска контейнеров:
+
+```bash
+docker-compose up -d
+```
+
+## 📝 Разработка
+
+### Добавление новой API маршрута
+
+1. Создайте файл в `src/app/api/[resource]/route.ts`
+2. Используйте `lib/db.ts` для работы с БД
+3. Добавьте валидацию с помощью Zod
+
+### Добавление нового компонента
+
+1. Создайте компонент в `src/components/`
+2. Используйте Tailwind CSS для стилей
+3. Используйте Lucide React для иконок
+
+### Работа с БД
+
+```bash
+# Создать новую миграцию
+npm run db:migrate:dev -- --create-only
+
+# Просмотр БД в Prisma Studio
+npm run db:studio:dev
+
+# Синхронизация production БД с development
+npm run db:sync:prod-to-dev
+```
+
+## ⚙️ Конфигурация
+
+### TypeScript
+
+Конфигурация в `tsconfig.json` (strict mode включен)
+
+### ESLint
+
+Конфигурация в `eslint.config.mjs`
+
+### Prettier
+
+Конфигурация в `.prettierrc` (если существует) или в `package.json`
+
+### Tailwind CSS
+
+Конфигурация в `postcss.config.mjs`
+
+## 🐛 Решение проблем
+
+### Ошибка подключения к БД
+
+- Проверьте переменную `DATABASE_URL` в `.env.development.local`
+- Убедитесь, что PostgreSQL запущен
+- Проверьте данные для подключения (host, port, user, password)
+
+### Ошибка миграций
+
+```bash
+# Сбросить БД и переприменить миграции
+npm run db:migrate:dev -- --skip-generate
+```
+
+### Prisma ошибки
+
+```bash
+# Пересгенерировать Prisma клиент
+npm run db:generate:dev
+```
+
+## 📄 Лицензия
+
+Приватный проект.
+
+## 👤 Контакты
+
+Для вопросов и предложений обращайтесь к разработчику.

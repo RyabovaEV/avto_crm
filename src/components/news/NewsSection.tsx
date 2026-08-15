@@ -64,7 +64,7 @@ export default function NewsSection({ initialData }: Props) {
         )}
 
         {news.length === 0 && state.mode !== 'creating' && (
-          <p className="text-sm text-muted-foreground">Телефоны не добавлены</p>
+          <p className="text-sm text-muted-foreground">Новости не добавлены</p>
         )}
 
         {news.map((newsItem) =>
