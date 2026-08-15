@@ -12,12 +12,15 @@ async function main() {
       orderBy: { id: 'asc' },
     });
 
-    for (let i = 0; i < routes.length; i++) {
-      await prisma.route.update({
-        where: { id: routes[i].id },
-        data: { order: i },
-      });
-    }
+    await prisma.$transaction(
+      routes.map((route, i) =>
+        prisma.route.update({ where: { id: route.id }, data: { order: i } })
+      )
+    );
+
+    console.log(
+      `Season ${group.seasonId}/${group.type}: ${routes.length} routes reordered`
+    );
   }
 }
 

@@ -16,7 +16,9 @@
     "db:migrate:prod": "dotenv -e .env.production.local -- prisma migrate deploy",
     "db:studio:prod": "dotenv -e .env.production.local -- prisma studio",
     "db:seed:prod": "dotenv -e .env.production.local -- prisma db seed",
-    "export:content": "dotenv -e .env.production.local -- tsx scripts/export-content.ts"
+    "db:dump:prod": "dotenv -e .env.production.local -- bash -c 'pg_dump --no-owner --no-privileges --clean --if-exists -f prod_dump.sql \"${DATABASE_URL%%\\?*}\"'",
+    "db:restore:dev": "dotenv -e .env.development.local -- bash -c 'psql -f prod_dump.sql \"${DATABASE_URL%%\\?*}\"'",
+    "db:sync:prod-to-dev": "npm run db:dump:prod && npm run db:restore:dev && rm -f prod_dump.sql"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.8.0",
