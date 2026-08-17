@@ -1,12 +1,8 @@
 import { prisma } from '@/lib/db';
 import { withApiErrorHandling } from '@/lib/api';
-import { buildTsFileContent } from '@/lib/export/toTsFile';
 import { parseRouteContext } from '@/lib/validation/route';
 import { NextResponse } from 'next/server';
-
-function capitalize(s: string) {
-  return s.charAt(0).toUpperCase() + s.slice(1);
-}
+import { buildJsonFileContent } from '@/lib/toJsonFile';
 
 export const GET = withApiErrorHandling(
   'GET routes export',
@@ -61,42 +57,15 @@ export const GET = withApiErrorHandling(
       })),
     }));
 
-    const typeDeclaration = `export type RouteDepartureData = {
-  time: string;
-  dayOfWeek: ('MON' | 'TUE' | 'WED' | 'THU' | 'FRI' | 'SAT' | 'SUN')[];
-  comment: string | null;
-};
-
-export type RouteCommentData = {
-  text: string;
-  times: string[];
-};
-
-export type RouteData = {
-  id: number;
-  number: string;
-  name: string;
-  isCircular: boolean;
-  departuresFromStart: RouteDepartureData[];
-  departuresFromEnd: RouteDepartureData[];
-  comments: RouteCommentData[];
-};`;
-
     const seasonKey = season.type.toLowerCase();
     const typeKey = context.data.type.toLowerCase();
-    const varName = `${seasonKey}${capitalize(typeKey)}Routes`;
 
-    const content = buildTsFileContent({
-      varName,
-      typeName: 'RouteData[]',
-      typeDeclaration,
-      data,
-    });
+    const content = buildJsonFileContent(data);
 
     return new NextResponse(content, {
       headers: {
-        'Content-Type': 'application/typescript; charset=utf-8',
-        'Content-Disposition': `attachment; filename="routes-${seasonKey}-${typeKey}.ts"`,
+        'Content-Type': 'application/json; charset=utf-8',
+        'Content-Disposition': `attachment; filename="routes-${seasonKey}-${typeKey}.json"`,
       },
     });
   }

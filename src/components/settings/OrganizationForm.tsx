@@ -40,7 +40,7 @@ export function OrganizationForm({ initialData }: Props) {
       secondaryAction={
         <ExportButton
           endpoint="/api/organization/export"
-          filename="organization.ts"
+          filename="organization.json"
         />
       }
     >

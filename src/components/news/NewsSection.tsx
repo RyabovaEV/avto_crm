@@ -93,7 +93,7 @@ export default function NewsSection({ initialData }: Props) {
         )}
       </div>
       <div className="flex justify-end">
-        <ExportButton endpoint="/api/news/export" filename="news.ts" />
+        <ExportButton endpoint="/api/news/export" filename="news.json" />
       </div>
     </Section>
   );

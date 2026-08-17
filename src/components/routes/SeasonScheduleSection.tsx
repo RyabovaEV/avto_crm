@@ -68,7 +68,7 @@ export function SeasonScheduleSection({
   const isAnyFormOpen = isFormOpen || isAddingComment || isEditingComment;
 
   const exportQuery = `seasonId=${seasonId}&type=${routeType}`;
-  const exportFilename = `routes-${seasonType.toLowerCase()}-${routeType.toLowerCase()}.ts`;
+  const exportFilename = `routes-${seasonType.toLowerCase()}-${routeType.toLowerCase()}.json`;
 
   return (
     <Accordion

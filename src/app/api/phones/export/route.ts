@@ -1,7 +1,7 @@
 import { prisma } from '@/lib/db';
 import { withApiErrorHandling } from '@/lib/api';
-import { buildTsFileContent } from '@/lib/export/toTsFile';
 import { NextResponse } from 'next/server';
+import { buildJsonFileContent } from '@/lib/toJsonFile';
 
 export const GET = withApiErrorHandling(
   'GET phones export',
@@ -19,24 +19,12 @@ export const GET = withApiErrorHandling(
       signature: p.signature,
     }));
 
-    const typeDeclaration = `export type PhoneData = {
-  id: number;
-  phone: string;
-  label: string | null;
-  signature: string | null;
-};`;
-
-    const content = buildTsFileContent({
-      varName: 'phones',
-      typeName: 'PhoneData[]',
-      typeDeclaration,
-      data,
-    });
+    const content = buildJsonFileContent(data);
 
     return new NextResponse(content, {
       headers: {
-        'Content-Type': 'application/typescript; charset=utf-8',
-        'Content-Disposition': 'attachment; filename="phones.ts"',
+        'Content-Type': 'application/json; charset=utf-8',
+        'Content-Disposition': 'attachment; filename="phones.json"',
       },
     });
   }

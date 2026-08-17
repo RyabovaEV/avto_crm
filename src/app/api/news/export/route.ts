@@ -1,6 +1,6 @@
 import { withApiErrorHandling } from '@/lib/api';
 import { prisma } from '@/lib/db';
-import { buildTsFileContent } from '@/lib/export/toTsFile';
+import { buildJsonFileContent } from '@/lib/toJsonFile';
 import { NextResponse } from 'next/server';
 
 export const GET = withApiErrorHandling(
@@ -16,25 +16,12 @@ export const GET = withApiErrorHandling(
       isMain: n.isMain,
     }));
 
-    const typeDeclaration = `export type NewsData = {
-  id: number;
-  /** ISO 8601 */
-  date: string;
-  news: string;
-  isMain: boolean;
-};`;
-
-    const content = buildTsFileContent({
-      varName: 'news',
-      typeName: 'NewsData[]',
-      typeDeclaration,
-      data,
-    });
+    const content = buildJsonFileContent(data);
 
     return new NextResponse(content, {
       headers: {
-        'Content-Type': 'application/typescript; charset=utf-8',
-        'Content-Disposition': 'attachment; filename="news.ts"',
+        'Content-Type': 'application/json; charset=utf-8',
+        'Content-Disposition': 'attachment; filename="news.json"',
       },
     });
   }

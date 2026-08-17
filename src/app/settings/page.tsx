@@ -2,7 +2,7 @@ import { PageContainer } from '@/components/layout/PageContainer';
 import { InsuranceForm } from '@/components/settings/InsuranceForm';
 import { OrganizationForm } from '@/components/settings/OrganizationForm';
 import { PhonesSection } from '@/components/phones/PhoneSection';
-import { ExportButton, Section } from '@/components/ui';
+import { Section } from '@/components/ui';
 import { prisma } from '@/lib/db';
 
 export default async function SettingsPage() {

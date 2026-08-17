@@ -34,7 +34,7 @@ export function InsuranceForm({ initialData }: Props) {
       secondaryAction={
         <ExportButton
           endpoint="/api/insurance/export"
-          filename="insurance.ts"
+          filename="insurance.json"
         />
       }
     >

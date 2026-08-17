@@ -93,7 +93,7 @@ export function PhonesSection({ initialData }: Props) {
         )}
       </div>
       <div className="flex justify-end">
-        <ExportButton endpoint="/api/phones/export" filename="phones.ts" />
+        <ExportButton endpoint="/api/phones/export" filename="phones.json" />
       </div>
     </Section>
   );
