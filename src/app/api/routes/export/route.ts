@@ -65,7 +65,7 @@ export const GET = withApiErrorHandling(
     return new NextResponse(content, {
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Content-Disposition': `attachment; filename="routes-${seasonKey}-${typeKey}.json"`,
+        'Content-Disposition': `attachment; filename="${seasonKey}-${typeKey}.json"`,
       },
     });
   }
