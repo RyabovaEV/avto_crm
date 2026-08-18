@@ -69,7 +69,7 @@ export const PATCH = withApiErrorHandling(
 
       return tx.route.findUniqueOrThrow({
         where: { id: routeId },
-        include: { departures: { orderBy: { time: 'asc' } } },
+        include: { departures: { orderBy: { time: 'asc' } }, comments: true },
       });
     });
 

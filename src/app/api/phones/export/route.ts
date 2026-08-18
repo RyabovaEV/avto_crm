@@ -13,7 +13,7 @@ export const GET = withApiErrorHandling(
     });
 
     const data = phones.map((p) => ({
-      id: p.id,
+      id: String(p.id),
       phone: p.phone,
       label: p.label,
       signature: p.signature,

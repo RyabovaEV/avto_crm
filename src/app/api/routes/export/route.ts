@@ -33,7 +33,7 @@ export const GET = withApiErrorHandling(
     });
 
     const data = routes.map((route) => ({
-      id: route.id,
+      id: String(route.id),
       number: route.number,
       name: route.name,
       isCircular: route.isCircular,

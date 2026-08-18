@@ -10,7 +10,7 @@ export const GET = withApiErrorHandling(
     const news = await prisma.news.findMany({ orderBy: { date: 'desc' } });
 
     const data = news.map((n) => ({
-      id: n.id,
+      id: String(n.id),
       date: n.date.toISOString(),
       news: n.news,
       isMain: n.isMain,

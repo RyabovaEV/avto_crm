@@ -193,8 +193,10 @@ export function useRoutesSchedule(
     key: K,
     value: FormState[K]
   ) {
-    if (state.mode === 'idle') return;
-    setState({ ...state, form: { ...state.form, [key]: value } });
+    setState((prev) => {
+      if (prev.mode === 'idle') return prev;
+      return { ...prev, form: { ...prev.form, [key]: value } };
+    });
   }
 
   // --- управление динамическими списками рейсов ---

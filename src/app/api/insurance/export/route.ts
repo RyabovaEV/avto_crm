@@ -1,6 +1,5 @@
 import { prisma } from '@/lib/db';
 import { withApiErrorHandling } from '@/lib/api';
-import { buildTsFileContent } from '@/lib/export/toTsFile';
 import { NextResponse } from 'next/server';
 import { buildJsonFileContent } from '@/lib/toJsonFile';
 

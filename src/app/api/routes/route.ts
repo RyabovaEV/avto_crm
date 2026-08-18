@@ -5,7 +5,6 @@ import {
   routeWithDeparturesSchema,
 } from '@/lib/validation/route';
 import { NextResponse } from 'next/server';
-import { Prisma } from '@/generated/prisma/client';
 
 export const GET = withApiErrorHandling(
   'GET routes',
@@ -23,6 +22,7 @@ export const GET = withApiErrorHandling(
       orderBy: { number: 'asc' },
       include: {
         departures: { orderBy: { time: 'asc' } },
+        comments: true,
       },
     });
 
@@ -71,7 +71,7 @@ export const POST = withApiErrorHandling(
           ],
         },
       },
-      include: { departures: { orderBy: { time: 'asc' } } },
+      include: { departures: { orderBy: { time: 'asc' } }, comments: true },
     });
 
     return NextResponse.json(route);
